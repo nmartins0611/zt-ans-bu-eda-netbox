@@ -33,7 +33,7 @@ services:
 EOF
 
 
-NETBOX_FQDN=netbox-8000-${_SANDBOX_ID}.env.play.intruqt.com
+#NETBOX_FQDN=netbox-8000-${_SANDBOX_ID}.env.play.intruqt.com
 
 #https://netbox-8000-ef393avfgkx8.env.play.instruqt.com
 
