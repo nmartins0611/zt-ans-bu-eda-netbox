@@ -218,6 +218,20 @@ virtualmachines:
         value: "isolated"
     networks:
       - default
+services:
+      - name: netbox-8000
+        ports:
+          - port: 8000
+            protocol: TCP
+            targetPort: 8000
+            name: netbox
+    routes:
+      - name: netbox-8000
+        host: netbox
+        service: netbox-8000
+        targetPort: 8000
+        tls: true
+        tls_termination: Edge      
     userdata: |-
       #cloud-config
       user: rhel
