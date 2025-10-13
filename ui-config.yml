@@ -25,6 +25,9 @@ tabs:
   - name: VS Ccode
     url: https://vscode-${guid}.${domain}
     external: false
+  - name: Netbox
+    url: https://netbox-${guid}.${domain}
+    external: false
   - name: "TERMINAL"
     url: /wetty_vscode
   - name: Cloud (AWS)
