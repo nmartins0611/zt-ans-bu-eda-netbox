@@ -13,7 +13,10 @@ ingress:
   - protocol: TCP
     port: 8080
   - protocol: TCP
-    port: 8443
+    port: 8443 
+  - protocol: TCP
+    port: 8000
+    
 egress:
 - ports:
   - protocol: TCP
@@ -28,4 +31,5 @@ egress:
     port: 8080
   - protocol: TCP
     port: 8443
-
+  - protocol: TCP
+    port: 8000
