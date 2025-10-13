@@ -1,0 +1,31 @@
+---
+# By default egress traffic is not allowed, define below the ports allowed.
+ingress:
+- ports:
+  - protocol: TCP
+    port: 443
+  - protocol: TCP
+    port: 80
+  - protocol: TCP
+    port: 3000
+  - protocol: TCP
+    port: 22
+  - protocol: TCP
+    port: 8080
+  - protocol: TCP
+    port: 8443
+egress:
+- ports:
+  - protocol: TCP
+    port: 443
+  - protocol: TCP
+    port: 80
+  - protocol: TCP
+    port: 3000
+  - protocol: TCP
+    port: 22
+  - protocol: TCP
+    port: 8080
+  - protocol: TCP
+    port: 8443
+

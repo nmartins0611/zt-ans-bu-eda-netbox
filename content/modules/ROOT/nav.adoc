@@ -1,0 +1,22 @@
+* xref:module-01.adoc[1. Terraform and Ansible Automation Platform 2.5]
+** xref:module-01.adoc#task1[☑️ Task 1 - Configure the Terraform Backend Credential in Ansible Automation Platform]
+** xref:module-01.adoc#task2[☑️ Task 2 - Terraform Inventory]
+** xref:module-01.adoc#task3[☑️ Task 3 - Create a Job Template to kick off a Terraform project (Terraform provider for AWS]
+** xref:module-01.adoc#task4[☑️ Task 4 - Create a Job Template to kick off a Terraform project (Terraform provider for AWS & Terraform Provider for ANSIBLE Automation Platform (AAP)]
+
+* xref:module-02.adoc[2. Create a Terraform-enabled Execution Environment]
+** xref:module-02.adoc#task1[☑️ Task 1 - Create the configuration files for the execution environment]
+** xref:module-02.adoc#task2[☑️ Task 2 - Run ansible-builder]
+** xref:module-02.adoc#task3[☑️ Task 3 - Add the Terraform Execution Environment to Ansible Automation Platform]
+
+* xref:module-03.adoc[3. OPTIONAL - Terraform Basics]
+** xref:module-03.adoc#task1[☑️ Task 1 - Initialize a Terraform Project]
+** xref:module-03.adoc#task2[☑️ Task 2 - Plan and Apply the Terraform Project]
+** xref:module-03.adoc#task3[☑️ Task 3 - Make Changes to the Terraform Project]
+** xref:module-03.adoc#task4[☑️ Task 4 - Deprovisioning resources of a Terraform Project]
+
+* xref:module-04.adoc[4. OPTIONAL - Terraform and the Certified Collection for Terraform]
+** xref:module-04.adoc#task1[☑️ Task 1 - Install the Red Hat certified collection for Terraform (cloud.terraform)]
+** xref:module-04.adoc#task2[☑️ Task 2 - Terraform Provider for Ansible *(OPTIONAL)*]
+** xref:module-04.adoc#task3[☑️ Task 3 - The Terraform Provider for Ansible Automation Platform]
+

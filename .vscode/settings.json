@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "kubernetes": "*.yaml ",
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///Users/hmourad/Documents/GitHub/zt-ans-bu-terraform-aap/runtime-automation/main.yml"
+    }
+}

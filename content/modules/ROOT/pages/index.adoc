@@ -1,0 +1,10 @@
+= {lab_name}
+
+Welcome to {lab_name} 
+
+*Ansible Automation Platform* has the abiity to automate and extend tools that are currently used in organizations. This is important as it means that you can integrate technologies that you are already using and have invested time and skills in. Using Ansible Automation Platform as a central automation platform to use these tools can extend their scope and improve their usage in your team. Use Ansible Automation Platform as a force multiplier to get more value from tools you already have throughout your organization!
+
+image:https://github.com/HichamMourad/terraform-aap/blob/main/images/main.png?raw=true[]
+
+
+Have fun!
