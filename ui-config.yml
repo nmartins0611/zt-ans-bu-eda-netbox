@@ -40,7 +40,7 @@ tabs:
   - name: Netbox
     url: https://netbox-${guid}.${domain}
     external: false
-  - name: "Terminal"
+  - name: ">_Terminal"
     url: /wetty_devtools
-  - name: "Netbox Term"
+    secondary_name: ">_Netbox"
     url: /wetty_netbox   
