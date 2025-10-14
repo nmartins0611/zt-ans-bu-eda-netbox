@@ -7,14 +7,14 @@
   #   - ../config/secrets.yaml
   
   tasks:
-  - name: Add bastion host
-    ansible.builtin.add_host:
-      name: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
-      ansible_ssh_host: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
-      ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
-      ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
-      ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
-      ansible_become_password: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+  # - name: Add bastion host
+  #   ansible.builtin.add_host:
+  #     name: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
+  #     ansible_ssh_host: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
+  #     ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
+  #     ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
+  #     ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+  #     ansible_become_password: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
   - name: Add nodes
     ansible.builtin.add_host:
       name: "{{ item }}"
@@ -26,6 +26,8 @@
     loop:
       - devtools
       - netbox
+      - control
+      
 - name: Demo Playbook for the ansible-runner API
   hosts: all:!localhost
   gather_facts: false
