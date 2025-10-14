@@ -25,6 +25,7 @@
       ansible_python_interpreter: /usr/libexec/platform-python
     loop:
       - vscode
+      - netbox
 - name: Demo Playbook for the ansible-runner API
   hosts: all:!localhost
   gather_facts: false
@@ -71,13 +72,13 @@
       SATELLITE_URL: "{{ satellite_url }}"
       SATELLITE_ORG: "{{ satellite_org }}"
       SATELLITE_ACTIVATIONKEY: "{{ satellite_activationkey }}"
-      AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') | default('AWS_ACCESS_KEY_ID_NOT_FOUND', true) }}"
-      AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') | default('AWS_SECRET_ACCESS_KEY_NOT_FOUND', true) }}"
-      AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
-      QUAY_USERNAME: "{{ username }}"
-      QUAY_PASSWORD: "{{ password }}"
-      REG_KEY: "{{ reg_username }}"
-      REG_PASS: "{{ reg_password }}"
+      # AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') | default('AWS_ACCESS_KEY_ID_NOT_FOUND', true) }}"
+      # AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') | default('AWS_SECRET_ACCESS_KEY_NOT_FOUND', true) }}"
+      # AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
+      # QUAY_USERNAME: "{{ username }}"
+      # QUAY_PASSWORD: "{{ password }}"
+      # REG_KEY: "{{ reg_username }}"
+      # REG_PASS: "{{ reg_password }}"
 
   - name: Output script result
     ansible.builtin.debug:
