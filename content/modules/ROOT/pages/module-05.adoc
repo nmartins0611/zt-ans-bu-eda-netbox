@@ -1,0 +1,107 @@
+= Lab Guide: Exploring Event-Driven Ansible Playbooks
+:doctype: book
+:toc:
+:toc-title: Table of Contents
+:sectnums:
+:icons: font
+
+_A guide to reviewing the Job Templates that will be run as actions by Event-Driven Ansible._
+
+---
+
+== Introduction
+
+In this exercise, you will review the pre-created Job Templates that will be used as actions by your Event-Driven Ansible rulebook. These are standard Automation Controller Job Templates, but they are linked to the `action` condition within a rule.
+
+The key components of this integration are:
+
+* **Event Source:** Detects changes (e.g., updates in NetBox).
+* **Rulebook:** Defines the conditions to listen for and the actions to take.
+* **Job Template:** Specifies the automation workflow to execute as the action.
+
+[IMPORTANT]
+====
+The Job Templates to be run by a rulebook action are defined by their **name**. It is critical that the name in the Job Template configuration exactly matches the name specified in the rulebook's `run_job_template` action.
+====
+
+[IMPORTANT]
+====
+.Lab Credentials
+====
+.Ansible Automation Platform (AAP)
+* **Username:** `admin`
+* **Password:** `ansible123!`
+
+.NetBox
+* **Username:** `admin`
+* **Password:** `netbox`
+====
+
+---
+
+== Task 1: Check the "Configure NTP Servers" Job Template
+
+First, you will verify that the Job Template for configuring NTP servers exists. This is one of the actions defined in your `netbox-webhooks.yml` rulebook.
+
+.   **Navigate to the Templates page.**
++
+    In the `AAP` tab, go to **Automation Execution** → **Templates**.
+
+.   **Verify the Job Template exists.**
++
+    Confirm that a Job Template named `Configure NTP Servers` is present in the list. This is the template that will be triggered when Event-Driven Ansible detects an update to the NTP server configuration in NetBox.
++
+image::../assets/Apr-09-2025_at_17.46.55-image.png[Templates list view, opts="border"]
+
+---
+
+== Task 2: Check the "Configure Login Banner" Job Template
+
+Next, you will verify the existence of the second Job Template used in your rulebook.
+
+.   **Navigate to the Templates page.**
++
+    If you are not already there, go to **Automation Execution** → **Templates**.
+
+.   **Verify the Job Template exists.**
++
+    Confirm that a Job Template named `Configure Login Banner` is present in the list. This template will be triggered when Event-Driven Ansible detects an update to the login banner in NetBox.
+
+---
+
+== Next Steps
+
+You have now verified the action components of your Event-Driven Ansible workflow. Press the `Next` button below to proceed to the next challenge where you will trigger these events.
+
+== Troubleshooting
+
+[WARNING]
+====
+.Job Templates Not Pre-created?
+If the Job Templates are missing, the `NetBox Dynamic Inventory` may not have been created correctly. First, go back to the inventory creation exercise and complete it. Then, run the following command in the `AAP Terminal` tab:
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel; ansible-navigator run /home/rhel/5-eda-playbooks.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
+
+[WARNING]
+====
+.NetBox Not Responding?
+NetBox needs a couple of minutes to start up. If you cannot see the NetBox login screen, go to the `netbox term` tab and run the following commands:
+[source,bash]
+----
+docker compose --project-directory=/tmp/netbox-docker stop
+docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
+----
+====
+
+[WARNING]
+====
+.NetBox Devices Missing?
+For the Dynamic Inventory to work, some pre-loaded content is needed in NetBox. If you can't see devices in the NetBox UI, run the following command in the `AAP Terminal` tab:
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
