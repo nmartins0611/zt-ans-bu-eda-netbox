@@ -1,0 +1,236 @@
+= Lab Guide: Event-Driven Ansible and NetBox in Action
+:doctype: book
+:toc:
+:toc-title: Table of Contents
+:sectnums:
+:icons: font
+
+_A guide to using Event-Driven Ansible to automatically respond to real-time changes in NetBox._
+
+---
+
+== Introduction
+
+In this workshop, you'll see Event-Driven Ansible (EDA) and NetBox in action by making real-time changes to your network. First, you'll modify an existing device's configuration in NetBox, triggering Ansible to detect and apply updates automatically. Then, you'll add a brand-new device, showcasing how Ansible reacts to new inventory entries by running predefined job templates.
+
+[IMPORTANT]
+====
+.Lab Credentials
+====
+.Ansible Automation Platform (AAP)
+* **Username:** `admin`
+* **Password:** `ansible123!`
+
+.NetBox
+* **Username:** `admin`
+* **Password:** `netbox`
+====
+
+---
+
+== Task 1: Review the NetBox Setup
+
+First, let's explore the existing configuration in NetBox.
+
+.   **Examine the `cat1` device.**
++
+    In the `netbox web` tab, go to **Devices** → **Devices** in the left sidebar. You will see a pre-configured Cisco Catalyst 8000v device named `cat1`. Notice that it has several required fields pre-populated, such as *Site*, *Role*, and *Device Type*.
++
+image::../assets/Feb-06-2025_at_01.05.01-image.png[Device details in NetBox, opts="border"]
+
+.   **Review the Custom Fields.**
++
+    Navigate to **Customization** → **Custom Fields**. You will see fields for `ansible_host` and `ansible_port`, which are used by the dynamic inventory.
++
+image::../assets/Feb-06-2025_at_01.17.01-image.png[Custom Fields in NetBox, opts="border"]
+
+.   **Review the Config Contexts.**
++
+    Navigate to **Provisioning** → **Config Contexts**. You will see contexts for `NTP Servers` and `Login Banner`, which store custom data for device configurations.
++
+image::../assets/Feb-06-2025_at_01.17.19-image.png[Config Contexts in NetBox, opts="border"]
+
+---
+
+== Task 2: Configure the NetBox Webhook
+
+To configure NetBox to send notifications to Ansible Automation Platform when an event occurs, you will now create a webhook.
+
+.   **Navigate to Webhooks.**
++
+    In the NetBox `Operations` menu, click on **Webhooks**.
+
+.   **Create a new webhook.**
++
+    **Click** the green **+ Add** button and fill out the form:
++
+    * **Name:** `EDA Webhook`
+    * **URL:** `http://control:5001/endpoint`
+    * **SSL Verification:** Uncheck this box.
++
+    Leave the other fields as they are and **click** **Create**.
++
+image::../assets/Feb-06-2025_at_01.32.09-image.png[Creating a webhook in NetBox, opts="border"]
+
+---
+
+== Task 3: Create NetBox Event Rules
+
+Now you will create Event Rules to specify which events should be forwarded to the webhook.
+
+.   **Create the `ntp_servers` and `login_banner` Event Rules.**
++
+    Go to **Operations** → **Event Rules** and **click** the green **+ Add** button.
++
+    * **Name:** `ntp_servers`
+    * **Object types:** `Extras > Config Context`
+    * **Event types:** `Object updated`
+    * **Action type:** `Webhook`
+    * **Webhook:** `EDA Webhook`
++
+    **Click** **Create**. Then, **repeat** these steps to create a second rule named `login_banner` with the same settings.
++
+image::../assets/Feb-07-2025_at_02.17.39-image.png[Creating an Event Rule, opts="border"]
+
+.   **Create the `new_device` Event Rule.**
++
+    **Create** a third rule with the following settings:
++
+    * **Name:** `new_device`
+    * **Object types:** `DCIM > Device`
+    * **Event types:** `Object created`
+    * **Action type:** `Webhook`
+    * **Webhook:** `EDA Webhook`
++
+    **Click** **Create**.
++
+image::../assets/Feb-07-2025_at_02.25.26-image.png[Creating the new device Event Rule, opts="border"]
+
+---
+
+== Task 4: Trigger an NTP Configuration Update
+
+Now you will apply a change in NetBox and observe how it triggers the corresponding Job Template in AAP.
+
+[IMPORTANT]
+====
+Before you begin, you can verify the current configuration. In the `AAP` tab, navigate to the `cat1` host within your `NetBox Dynamic Inventory`. You will see it has only two NTP servers configured.
+image::../assets/Feb-07-2025_at_02.36.00-image.png[Initial NTP configuration on cat1, opts="border"]
+====
+
+.   **Update the NTP Config Context.**
++
+    In the `NetBox` tab, go to **Provisioning** → **Config Contexts** and click on `ntp_servers`.
+
+.   **Edit the data payload.**
++
+    **Click** the orange **EDIT** button. In the *Data* field, add a third NTP server. The final JSON should look like this:
++
+[source,json]
+----
+{
+ "ntp_servers": [
+     "time-a-g.nist.gov",
+     "time-b-g.nist.gov",
+     "time-c-g.nist.gov"
+ ]
+}
+----
++
+    **Click** the **Save** button.
+
+---
+
+== Task 5: Observe Event-Driven Ansible in Action
+
+Switch to the `AAP` tab to see the automated response.
+
+.   **Check the Rulebook Activation.**
++
+    Go to **Automation Decisions** → **Rulebook Activations**. A quick way to see if an event was triggered is to check the **Fire count** for your activation. It should have increased.
++
+image::../assets/Feb-07-2025_at_02.56.56-image.png[Increased fire count, opts="border"]
+
+.   **Review the Rule Audit.**
++
+    For more detail, go to the **Rule Audit** section. You will see which Job Template was triggered. **Click** on the **NTP updates** entry, then go to the **Events** tab to see the webhook payload that triggered the rule.
++
+image::../assets/Feb-07-2025_at_02.59.55-image.png[Rule Audit showing the event details, opts="border"]
+
+.   **Review the Job Template output.**
++
+    You can see the output of the automation job by navigating to **Automation Execution** → **Jobs**.
+
+---
+
+== Task 6: Trigger a Login Banner Update
+
+Now, try it yourself! Switch to the `NetBox` tab and update the `login_banner` Config Context. Then, observe the corresponding job run in AAP.
+
+---
+
+== Task 7: Trigger a New Device Workflow
+
+Finally, you will add a new device to NetBox and see how EDA triggers a multi-step provisioning workflow.
+
+.   **Create a new device in NetBox.**
++
+    Go to **Devices** → **Devices** and **click** the green **+ Add** button. Fill out the form with the following details:
++
+    * **Name:** `cat2`
+    * **Device Role:** `edge-router`
+    * **Device Type:** `cisco-c8000v`
+    * **Site:** `cisco-live-emea`
+    * **Platform:** `cisco.ios.ios`
+    * **Custom Fields** → **Host:** `cisco2`
+    * **Custom Fields** → **Port:** `22`
++
+    **Click** **Create**.
++
+image::../assets/Feb-07-2025_at_03.18.35-image.png[Adding a new device in NetBox, opts="border"]
+
+.   **Observe the workflow execution in AAP.**
++
+    In the `AAP` tab, check the **Fire count** and **Rule Audit** again. You should see that the `New Device Added` rule was triggered. Go to **Automation Execution** → **Jobs** and verify that the **Provision New Device Workflow** ran successfully.
++
+image::../assets/Feb-07-2025_at_03.21.47-image.png[Successful workflow execution for the new device, opts="border"]
+
+.   **Verify the new device configuration.**
++
+    Go to your `NetBox Dynamic Inventory` → **Hosts**. You should now see both `cat1` and `cat2`. Click on `cat2` to verify that it has been configured with the three NTP servers and your new login banner, all sourced dynamically from NetBox.
++
+image::../assets/Feb-07-2025_at_04.36.13-image.png[Configuration of the new cat2 device, opts="border"]
+
+---
+
+== Congratulations!
+
+You have finished the Event-Driven Ansible and Network Sources of Truth workshop! 🎉
+
+== Troubleshooting
+
+[WARNING]
+====
+.NetBox Worker Issues
+If AAP is not showing a **Fire count** or jobs in **Rule Audit**, the NetBox worker might be misbehaving. Go to the **NetBox** tab, click **Admin > Background Tasks**, and check if workers are running. If not, go to the `netbox term` tab and run `docker compose --project-directory=/tmp/netbox-docker stop` followed by `docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker`.
+====
+
+[WARNING]
+====
+.Job Templates Not Pre-created?
+If Job Templates are missing, run the following command in the `AAP Terminal` tab:
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel; ansible-navigator run /home/rhel/5-eda-playbooks.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
+
+[WARNING]
+====
+.NetBox Devices Missing?
+If you don't see devices in NetBox, run the following command in the `AAP Terminal` tab:
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
