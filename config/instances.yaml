@@ -208,7 +208,7 @@ virtualmachines:
               requests:
                 storage: "20Mi"
 
- - name: "netbox"
+  - name: "netbox"
     image: "rhel-9.5"
     memory: "2G"
     cores: 2
@@ -218,7 +218,7 @@ virtualmachines:
         value: "isolated"
     networks:
       - default
-services:
+    services:
       - name: netbox-8000
         ports:
           - port: 8000
