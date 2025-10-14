@@ -5,30 +5,42 @@ antora:
   dir: www
   modules:
     - name: module-01
-      label: "Terraform and Ansible Automation Platform 2.5"
+      label: "Network automation and Sources of Truth"
       solveButton: false
     - name: module-02
-      label: "Create a Terraform-enabled Execution Environment"
+      label: "AAP Dynamic Inventory"
       solveButton: false
     - name: module-03
-      label: "OPTIONAL - Terraform Basics"
+      label: "Event-Driven Ansible: Automation Decisions"
       solveButton: false
     - name: module-04
-      label: "OPTIONAL - Terraform and the Certified Collection for Terraform"
+      label: "Event-Driven Ansible Rulebooks"
+      solveButton: false
+    - name: module-05
+      label: "Event-Driven Ansible Playbooks"
+      solveButton: false
+    - name: module-06
+      label: "Event-Driven Ansible: New Device Added Workflow"
+      solveButton: false
+    - name: module-07
+      label: "Event-Driven Ansible and NetBox in Action"
       solveButton: false
 
 tabs:
   - name: Ansible Automation Platform
     url: https://control-${guid}.${domain}/
-  # - name: gitea
-  #   url: https://gitea-${guid}.${domain}/
+  - name: Netbox
+    url: https://netbox-${guid}.${domain}
+    external: false
+  - name: gitea
+    url: https://gitea-${guid}.${domain}/
   - name: VS Ccode
     url: https://vscode-${guid}.${domain}
     external: false
   - name: Netbox
     url: https://netbox-${guid}.${domain}
     external: false
-  - name: "TERMINAL"
-    url: /wetty_vscode
-  - name: Cloud (AWS)
-    url: /cloud
+  - name: "Terminal"
+    url: /wetty_devtools
+  - name: "Netbox Term"
+    url: /wetty_netbox   
