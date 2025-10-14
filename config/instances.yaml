@@ -135,7 +135,7 @@ virtualmachines:
           fH5qke1XR5LFGpndX1GuSVBhdZq94x0aGXWTQCDNIPQ3QtrQ64PBF1vRFdJ6o/FI
           uEOWpQhGYHMC0A==
           -----END CERTIFICATE-----
-  - name: "vscode"
+  - name: "devtools"
     image: "devtools-ansible"
     memory: "8G"
     cores: 2
