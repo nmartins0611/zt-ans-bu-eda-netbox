@@ -16,7 +16,7 @@ retry "curl -k -L https://${SATELLITE_URL}/pub/katello-server-ca.crt -o /etc/pki
 retry "update-ca-trust"
 retry "rpm -Uhv https://${SATELLITE_URL}/pub/katello-ca-consumer-latest.noarch.rpm"
 retry "subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SATELLITE_ACTIVATIONKEY}"
-retry "dnf install -y dnf-utils"
+retry "dnf install -y dnf-utils git nano"
 retry "dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
 retry "dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y"
 
