@@ -60,8 +60,8 @@
       dest: "/tmp/setup-scripts/setup-{{ ansible_host }}.sh"
     register: r_result
 
-  - name: Include secrets var
-    include_vars: ../config/secrets.yaml
+  # - name: Include secrets var
+  #   include_vars: ../config/secrets.yaml
 
   - name: Execute setup-node.sh if it exists
     when: r_script_test.stat.exists
