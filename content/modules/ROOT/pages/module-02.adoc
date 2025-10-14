@@ -1,210 +1,223 @@
+= Lab Guide: Configuring a NetBox Dynamic Inventory
 :doctype: book
+:toc:
+:toc-title: Table of Contents
+:sectnums:
+:icons: font
 
-'''
+_A guide to managing hosts and groups by configuring NetBox as a dynamic inventory source for Ansible Automation Platform._
 
-= Create a Terraform-enabled Execution Environment
-
-In this challenge you will create an Execution Environment that will enable   Terraform usage in Ansible Automation Platform.
-
-== What is an Execution Environment?
-All automation in Red Hat Ansible Automation Platform runs on container images called automation execution environments.
-Automation execution environments create a common language for communicating automation dependencies, and offer a standard way to build and distribute the automation environment.
-
-In the previous challenge an Execution Environment called `Terraform Execution Environment` was already created for you.
-
-*To use Terraform in YOUR Ansible Automation Platform environment you must create and Execution Environment* that includes the Cloud Terraform collection, the Terraform binary, other cloud collections, and other dependencies.
-*Hence, why you will learn how to create an Execution Environment.*
-
-The tool needed to create an `execution environment` is called `ansible-builder`
-
-👋 Challenge introduction.
-
-Estimated time to complete: _30 minutes_
-
-In this challenge you will learn:
-* How to create the necessary configuration files needed to create an execution environment
-* How to create the execution environment container image using the `ansbile-builder` tool
-* How to add the new execution environment to Ansible Automation Platform
-
-== Execution Environments
-
-*_To run Terraform commands from within Ansible Automation Platform, you will need to create an execution environment that contains the Terraform binary and the Red Hat certified collection for Terraform.
-This is easy to do using https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/latest/html/creating_and_using_execution_environments/assembly-using-builder[ansible-builder]._*
-
-In this challenge you will create an execution environment containing everything you need to run Terraform from the Ansible Automation Platform.
-
-NOTE: You can perform the following steps at the TERMINAL, or in Visual Studio Code (VSCode).
-In VSCode you can open a terminal prompt.
-Choose either the `TERMINAL` tab, or the `VSCODE` tab from the top of the lab screen.
-We will walk through the steps using the `TERMINAL` but please feel free to do this in the `VSCODE` tab if you are more comfortable there!
-
-'''
-
-== ☑️ Task 1 - Create the configuration files for the execution environment
-
-To create an execution environment with `ansible-builder`, we need an execution environment definition file.
-The file name will be `execution-environment.yml`
-
-Go to the `TERMINAL`  tab at the top of the lab to open the terminal prompt.
-You will be in the `/home/rhel` folder
-
-Change to the folder named `/home/rhel/terraform-ee`
-
-[source,bash,role=execute]
-----
-cd /home/rhel/terraform-ee
-----
-
-Two empty file already exist in this folder,  `execution-environment.yml` and `requirements.yml` files.
-
-Modify the `execution-environment.yml` file and paste into it the following contents: Use `vi` or `vim` or `nano` to modify the `execution-environment.yml` file.
-
-[source,bash,role=execute]
-----
-vim execution-environment.yml
-----
-
-[source,yaml,role=execute]
-----
 ---
-version: 3
 
-images:
-  base_image:
-    name: registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel8:latest
+== Introduction to Dynamic Inventories
 
-dependencies:
-  galaxy: requirements.yml
+An inventory in **Ansible Automation Platform** is a collection of hosts for running jobs. If your inventory changes frequently, static solutions may not be ideal. **Dynamic Inventories** solve this by automating the process of tracking hosts from multiple sources of truth, such as cloud providers or CMDBs like NetBox.
 
-options:
-  package_manager_path: /usr/bin/microdnf
+Ansible Automation Platform connects with external inventories using plugins, which are the preferred method. The NetBox Certified Ansible Collection includes modules for:
 
-additional_build_steps:
-  prepend_base:
-    - RUN $PYCMD -m pip install --upgrade pip setuptools
-  append_base:
-    - RUN curl "https://releases.hashicorp.com/terraform/1.12.2/terraform_1.12.2_linux_amd64.zip" -o "/terraform.zip"
-    - RUN unzip /terraform.zip -d /terraform
-    - RUN mv /terraform/terraform /bin
-----
+* **Dynamic Inventory:** Fetching real-time data.
+* **State Definition:** Ensuring configurations align with your intended design.
+* **Querying Network Data:** Extracting details for use in playbooks.
 
-This file defines the rules `ansible-builder` should use to create the execution environment container, including:
+In this lab, you'll explore how Ansible Automation Platform syncs with NetBox and integrates with Event-Driven Ansible for real-time network updates.
 
-. `version`: the version of ansible-builder to use
-. `images`: here you define the base image to use for the container.
-*_You are using the  `ee-minimal-rhel8:latest` base image for the build process_*
-. `dependencies`: in this section you can declare dependencies for optionally galaxy (ansible collections), python, and other system dependencies.
-Notice this section includes a statement `galaxy: requirements.yml`, this is the file used to define dependent collections found on Ansible Galaxy to be included within the Execution Environment being built
-. `additional_build_steps`: here we can list commands to be inserted into the Dockerfile/Containerfile to be executed.
-In this example, we are downloading and installing Terraform because the Terraform binary is needed for Ansible Automation Platform for playbook execution, specifically playbooks that trigger Terraform.
-`prepend_base` is to include commands to be used `before` the main build steps.
-`append_base` is to include commands to be used `after` the main build steps.
+[IMPORTANT]
+====
+.Lab Credentials
+====
+.Ansible Automation Platform (AAP)
+* **Username:** `admin`
+* **Password:** `ansible123!`
 
-Modify the file called `requirements.yml` and paste the following contents: Use `vi` or `nano` to modify the `requirements.yml` file.
+.NetBox
+* **Username:** `admin`
+* **Password:** `netbox`
+====
 
-[source,bash,role=execute]
-----
-vim requirements.yml
-----
-
-[source,yaml,role=execute]
-----
 ---
-collections:
-  - name: amazon.aws
-  - name: cloud.terraform
-  - name: google.cloud
-----
 
-This file defines the Ansible content collections you want to include in your execution environment.
+== Task 1: Create the Inventory Project
 
-. Include the `amazon.aws`, `cloud.terraform`, and `google.cloud` collections
-. This will allow Ansible playbooks to perform automation on cloud infrastructure on AWS and GCP using Terraform and Ansible Automation Platform
-. If  additional collections are desired, one would include them in the `requirements.yml` file as well
+First, you will create a project in AAP that contains the NetBox dynamic inventory plugin configuration file.
 
-Please move ahead to the next task.
+.   **Navigate to the Projects page.**
++
+    In the `AAP` tab, go to **Automation Execution** → **Projects**.
 
-'''
-
-== ☑️ Task 2 - Run ansible-builder
-
-Run `ansible-builder` to build the execution environment container.
-
-From the terminal prompt run the following:
-
-[source,bash,role=execute]
-----
-ansible-builder build -v 3 --tag terraform-ee
-----
-
-This will build the container image tagged with `terraform-ee`.
-This will take a few minutes, and you should see output similar to the following:
-
-image::https://github.com/HichamMourad/terraform-aap/blob/main/images/eesuccess.png?raw=true[]
-
-To see the newly created image run the following command.
-This image was built locally.
-
-[source,bash,role=execute]
-----
-podman images
-----
-
-At this point, you would typically push the container image to a registry such as `Quay` or `Dockerhub` or your own `Private Automation Hub`.
-If you have a Quay or Dockerhub account already, feel free to create a repository, push the image as you normally would, and use it in the following steps, *_otherwise we have a pre-existing image you can pull._*
-
-*_Example commands_* on how to tag and then push the Execution Environment image to Quay.io
-
-[source,bash,role=execute]
-----
-podman tag localhost/terraform-ee  quay.io/[username]/terraform-ee
-
-podman login --username [username] --password [mypassowrd] quay.io
-
-podman push quay.io/[username]/terraform-ee
-----
-
-'''
-
-== ☑️ Task 3 - Add the Terraform Execution Environment to Ansible Automation Platform
-
-Now you will add an execution environment to Ansible Automation Platform.
-
-Click on the `Ansible Automation Platform` tab at the top of lab.
-(if not already)
-
-Log in using the following *Login Credentials:*
-
-* `User:  admin` 
-* `Password:  ansible123!`
-
-Expand the `Automation Execution` menu on the left.
-
-Navigate to  `Automation Execution` -> `Infrastructure` -> `Execution Environments`.
-
-Click on `+ Create execution environment` and enter the following information.
-
+.   **Create a new project.**
++
+    **Click** the **Create project** button and fill out the form with the following details:
++
+[cols="1,2a"]
 |===
-| Field | Value
-
-| Name
-| myTerraform EE
-
-| Image
-| quay.io/acme_corp/terraform_ee
-
-| Pull
-| Only pull the image if not present before running
-
-| Registry credential
-| Quay Registry Credential
+| Key | Value
+| Name | `netbox-inventory-project`
+| Organization | `Default`
+| Execution environment | `netbox-ee`
+| Source control type | `Git`
+| Source control URL | `https://github.com/leogallego/netbox-inventory.git`
 |===
 
-NOTE: *Since this image on Quay.io is public you don't need to create a Registry credential*
+.   **Save the project.**
++
+    **Click** the blue **Create project** button.
 
-Click on `Create execution environment` to save this new Execution Environmnet.
-Yes, Yes, we're using the same image we already have, but remember, this is just to demnstrate how you would add your own created Execution Environment to Ansible Automation Platform.
+.   **Review the inventory plugin file.**
++
+    The `netbox.netbox.nb_inventory` plugin is configured via a file in the Git repository. The content of the `netbox_inventory` file looks like this:
++
+[source,yaml]
+----
+plugin: netbox.netbox.nb_inventory
+config_context: true
+validate_certs: False
+group_by:
+  - platforms
+  - device_roles
+  - sites
+compose:
+  ansible_network_os: platform.name
+  ansible_host: custom_fields.host
+  ansible_port: custom_fields.port
+----
 
-image::https://github.com/HichamMourad/terraform-aap/blob/main/images/create-ee.png?raw=true[]
+---
 
-This Execution Environment is now available for use in Ansible Automation Platform.
+== Task 2: Create the NetBox Credential
+
+Next, you will create a custom credential type and a credential in AAP to securely store the NetBox API token.
+
+.   **Create a Custom Credential Type.**
++
+    Go to **Automation Execution** → **Infrastructure** → **Credential Types** and click **Create credential type**.
++
+    * **Name:** `NetBox`
+    * **Description:** `NetBox API custom credential`
+    * **Input configuration:**
++
+[source,yaml]
+----
+fields:
+  - id: NETBOX_API
+    type: string
+    label: NetBox Host URL
+  - id: NETBOX_TOKEN
+    type: string
+    label: NetBox API Token
+    secret: true
+required:
+  - NETBOX_API
+  - NETBOX_TOKEN
+----
++
+    * **Injector configuration:**
++
+[source,yaml]
+----
+env:
+  NETBOX_API: '{{ NETBOX_API }}'
+  NETBOX_TOKEN: '{{ NETBOX_TOKEN }}'
+----
++
+    **Click** **Create credential type**.
+
+.   **Get the NetBox API Token.**
++
+    Go to the `netbox web` tab and log in. In the left sidebar, scroll to the bottom, expand the **Admin** menu, and click **API Tokens**. **Copy** the **Key Token** to your clipboard.
++
+image::../assets/Feb-05-2025_at_15.06.21-image.png[Copying the NetBox API Token, opts="border"]
+
+.   **Create the NetBox Credential in AAP.**
++
+    Return to the `AAP` tab. Go to **Automation Execution** → **Infrastructure** → **Credentials** and click **Create credential**.
++
+    * **Name:** `NetBox API`
+    * **Organization:** `Default`
+    * **Credential Type:** `NetBox`
+    * **NetBox Host URL:** `http://netbox:8000`
+    * **NetBox API Token:** `0123456789abcdef0123456789abcdef01234567`
++
+    **Click** **Create credential**.
++
+image::../assets/Feb-06-2025_at_12.11.09-image.png[Completed NetBox credential in AAP, opts="border"]
+
+---
+
+== Task 3: Create the Dynamic Inventory
+
+Now, you will create the inventory that will use NetBox as its source.
+
+.   **Navigate to the Inventories page.**
++
+    In the `AAP` tab, go to **Automation Execution** → **Infrastructure** → **Inventories**.
+
+.   **Create a new inventory.**
++
+    **Click** **Create inventory** → **Create inventory**.
++
+    * **Name:** `NetBox Dynamic Inventory`
+    * **Organization:** `Default`
++
+    **Click** **Create inventory**.
+
+---
+
+== Task 4: Add the Dynamic Source
+
+Finally, you will configure the dynamic source within your new inventory.
+
+.   **Navigate to the Sources tab.**
++
+    Inside the `NetBox Dynamic Inventory`, click the **Sources** tab. Notice that the **Hosts** tab is currently empty.
++
+image:../assets/Feb-05-2025_at_15.38.09-image.png[Inventory Sources tab, opts="border"]
+
+.   **Create a new source.**
++
+    **Click** the blue **Create source** button and fill out the form:
++
+    * **Name:** `netbox-inventory-source`
+    * **Execution Environment:** `netbox-ee`
+    * **Source:** `Sourced from a project`
+    * **Credential:** `NetBox API`
+    * **Project:** `netbox-inventory-project`
+    * **Inventory file:** `netbox_inventory`
+    * **Verbosity:** `(1) Info`
+    * **Options:** Check both `Overwrite` and `Update on launch`.
+    * **Cache timeout (seconds):** `120`
++
+    **Click** **Create source**.
++
+image:../assets/Feb-05-2025_at_15.41.48-image.png[Completed inventory source form, opts="border"]
+
+.   **Sync the inventory source.**
++
+    On the details page for the new source, **click** the **Launch inventory update** button in the top right.
++
+image:../assets/Feb-06-2025_at_12.16.55-image.png[Launch inventory update button, opts="border"]
+
+.   **Verify the hosts.**
++
+    Go back to the `NetBox Dynamic Inventory` details and click the **Hosts** tab. You should now see the Cisco Catalyst 8000v device, which was dynamically imported from NetBox.
++
+image:../assets/Feb-06-2025_at_12.18.18-image.png[Host successfully imported from NetBox, opts="border"]
+
+---
+
+== Next Steps
+
+Press the `Next` button below to proceed to the next challenge.
+
+== Troubleshooting
+
+[WARNING]
+====
+* NetBox needs a couple of minutes to start up. If you can't see the NetBox login screen, go to the `netbox term` tab and run `docker compose --project-directory=/tmp/netbox-docker stop` followed by `docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker`.
+
+* For the Dynamic Inventory to work, some pre-loaded content is needed in NetBox. If you don't see any devices in the NetBox UI, run the following command in the `AAP` terminal:
++
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
