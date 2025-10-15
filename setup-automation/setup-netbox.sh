@@ -21,12 +21,42 @@ retry "dnf config-manager --add-repo https://download.docker.com/linux/centos/do
 retry "dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y"
 setenforce 0
 
-git clone --depth=1 -b release https://github.com/netbox-community/netbox-docker.git /tmp/netbox-docker
+#!/bin/bash
+
+# Retry function
+retry() {
+    local max_attempts=3
+    local delay=5
+    local attempt=1
+    
+    while [ $attempt -le $max_attempts ]; do
+        echo "Attempt $attempt of $max_attempts: $@"
+        if "$@"; then
+            echo "Command succeeded"
+            return 0
+        fi
+        
+        if [ $attempt -lt $max_attempts ]; then
+            echo "Command failed. Retrying in ${delay}s..."
+            sleep $delay
+        fi
+        
+        ((attempt++))
+    done
+    
+    echo "Command failed after $max_attempts attempts"
+    return 1
+}
+
+# Clone repository
+retry git clone --depth=1 -b release https://github.com/netbox-community/netbox-docker.git /tmp/netbox-docker
+
+# Create docker-compose override file
 cat <<EOF | tee /tmp/netbox-docker/docker-compose.override.yml
 services:
   netbox:
     ports:
-      - 8080:8080
+      - 8000:8080
     environment:
       ALLOWED_HOSTS: '*'
       POSTGRES_USER: "netbox"
@@ -38,20 +68,21 @@ services:
       SUPERUSER_EMAIL: "admin@example.com"
       SUPERUSER_PASSWORD: "netbox"
       SUPERUSER_NAME: "admin"
-#      CSRF_TRUSTED_ORIGINS: "http://netbox:8000"
-#      DEBUG: "true"
     healthcheck:
       start_period: 180s
 EOF
 
-
-#NETBOX_FQDN=netbox-8000-${_SANDBOX_ID}.env.play.intruqt.com
-
-#https://netbox-8000-ef393avfgkx8.env.play.instruqt.com
+# Start docker service
 systemctl start docker
 systemctl enable docker
-### new docker-compose-plugin
-docker compose --project-directory=/tmp/netbox-docker pull 
-## daemon mode
-docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
-docker compose --project-directory=/tmp/netbox-docker logs -f netbox netbox-worker > /tmp/netbox.log 2>&1 &
+
+# Wait for docker to be ready
+sleep 5
+
+# Pull images with retry
+retry docker compose --project-directory=/tmp/netbox-docker pull
+
+# Start containers with retry
+retry docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
+
+echo "Setup complete!"
