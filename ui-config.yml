@@ -37,7 +37,7 @@ tabs:
   - name: VS Ccode
     url: https://vscode-${guid}.${domain}
     external: false
-  # - name: ">_Terminal"
-  #   url: /wetty_devtools
-  #   secondary_name: ">_Netbox"
-  #   url: /wetty_netbox   
+  - name: ">_Terminal"
+    url: /wetty_devtools
+    secondary_name: ">_Netbox"
+    secondary_url: /wetty_netbox   
