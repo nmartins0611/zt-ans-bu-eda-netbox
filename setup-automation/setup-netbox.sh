@@ -48,7 +48,8 @@ EOF
 #NETBOX_FQDN=netbox-8000-${_SANDBOX_ID}.env.play.intruqt.com
 
 #https://netbox-8000-ef393avfgkx8.env.play.instruqt.com
-
+systemctl start docker
+systemctl enable docker
 ### new docker-compose-plugin
 docker compose --project-directory=/tmp/netbox-docker pull 
 ## daemon mode
