@@ -1,8 +1,8 @@
 ---
 site:
-  title: Terraform & Red Hat Ansible Automation Platform (AAP 2.5)
+  title: Event-Driven Ansible and Netbox
   url: https://redhat-scholars.github.io/course-template
-  start_page: modules::index.adoc
+  start_page: modules::module-01.adoc
 
 content:
   sources:
