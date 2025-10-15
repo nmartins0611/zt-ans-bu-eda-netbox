@@ -38,13 +38,6 @@ cert: false
 EOF
 
 systemctl start code-server
-#!/bin/bash
-
-# Wait for Instruqt VM to finish booting
-while [ ! -f /opt/instruqt/bootstrap/host-bootstrap-completed ]; do
-    echo "Waiting for Instruqt to finish booting the VM"
-    sleep 1
-done
 
 # Set up error handling and DNS resolution
 set -euxo pipefail
@@ -140,8 +133,6 @@ systemctl start nginx
 loginctl enable-linger $USER
 # Pull the latest autocon-ee image
 su - $USER -c 'podman pull ghcr.io/ansible-network/autocon-ee'
-
-
 
 su - rhel -s /bin/bash <<EOF
 
