@@ -2,7 +2,7 @@
 site:
   title: Event-Driven Ansible and Netbox as a source of truth.
   url: https://redhat-scholars.github.io/course-template
-  start_page: modules::index.adoc
+  start_page: modules::module-01.adoc
 
 content:
   sources:
