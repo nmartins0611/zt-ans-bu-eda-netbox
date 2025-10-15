@@ -26,7 +26,7 @@ cat <<EOF | tee /tmp/netbox-docker/docker-compose.override.yml
 services:
   netbox:
     ports:
-      - 8000:8080
+      - 8080:8080
     environment:
       ALLOWED_HOSTS: '*'
       POSTGRES_USER: "netbox"
@@ -54,3 +54,4 @@ systemctl enable docker
 docker compose --project-directory=/tmp/netbox-docker pull 
 ## daemon mode
 docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
+docker compose --project-directory=/tmp/netbox-docker logs -f netbox netbox-worker > /tmp/netbox.log 2>&1 &
