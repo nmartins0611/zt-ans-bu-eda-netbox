@@ -19,7 +19,7 @@ retry "subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SA
 retry "dnf install -y dnf-utils git nano"
 retry "dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
 retry "dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y"
-
+setenforce 0
 
 git clone --depth=1 -b release https://github.com/netbox-community/netbox-docker.git /tmp/netbox-docker
 cat <<EOF | tee /tmp/netbox-docker/docker-compose.override.yml
