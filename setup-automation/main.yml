@@ -2,19 +2,15 @@
 - name: Create inventory
   hosts: localhost
   gather_facts: false
-
-  # vars_files:
-  #   - ../config/secrets.yaml
-  
   tasks:
-   - name: Add bastion host
-     ansible.builtin.add_host:
-       name: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
-       ansible_ssh_host: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
-       ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
-       ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
-       ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
-       ansible_become_password: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+  - name: Add bastion host
+    ansible.builtin.add_host:
+      name: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
+      ansible_ssh_host: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
+      ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
+      ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
+      ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+      ansible_become_password: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
   - name: Add nodes
     ansible.builtin.add_host:
       name: "{{ item }}"
@@ -24,10 +20,9 @@
       ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
       ansible_python_interpreter: /usr/libexec/platform-python
     loop:
-      - control
       - devtools
       - netbox
-      
+      - control
 - name: Demo Playbook for the ansible-runner API
   hosts: all:!localhost
   gather_facts: false
@@ -62,9 +57,6 @@
       dest: "/tmp/setup-scripts/setup-{{ ansible_host }}.sh"
     register: r_result
 
-  # - name: Include secrets var
-  #   include_vars: ../config/secrets.yaml
-
   - name: Execute setup-node.sh if it exists
     when: r_script_test.stat.exists
     shell: "sh -x /tmp/setup-scripts/setup-{{ ansible_host }}.sh > /tmp/setup-scripts/setup-{{ ansible_host }}.log 2>&1"
@@ -74,13 +66,6 @@
       SATELLITE_URL: "{{ satellite_url }}"
       SATELLITE_ORG: "{{ satellite_org }}"
       SATELLITE_ACTIVATIONKEY: "{{ satellite_activationkey }}"
-      # AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') | default('AWS_ACCESS_KEY_ID_NOT_FOUND', true) }}"
-      # AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') | default('AWS_SECRET_ACCESS_KEY_NOT_FOUND', true) }}"
-      # AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
-      # QUAY_USERNAME: "{{ username }}"
-      # QUAY_PASSWORD: "{{ password }}"
-      # REG_KEY: "{{ reg_username }}"
-      # REG_PASS: "{{ reg_password }}"
 
   - name: Output script result
     ansible.builtin.debug:
