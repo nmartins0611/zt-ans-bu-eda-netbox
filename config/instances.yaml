@@ -46,7 +46,7 @@ containers:
         - >
           curl -X POST -H "accept: application/json" -H "Content-Type: application/json"
           -u 'gitea:gitea'
-          -d '{"clone_addr": "https://github.com/ansible-tmm/terraform-aap.git", "repo_name": "terraform-aap", "owner": "student", "uid": 2, "private": false}'
+          -d '{"clone_addr": "https://github.com/ansible-tmm/instruqt-netbox.git", "repo_name": "netbox", "owner": "student", "uid": 2, "private": false}'
           http://localhost:3000/api/v1/repos/migrate
     memory: 2Gi
     services:
