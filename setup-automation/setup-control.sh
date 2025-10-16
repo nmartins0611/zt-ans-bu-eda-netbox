@@ -63,7 +63,7 @@ tee /tmp/setup.yml << EOF
     NETBOX_API_VAR: "{{ '{{' }} NETBOX_API {{ '}}' }}"
     NETBOX_TOKEN_VAR: "{{ '{{' }} NETBOX_TOKEN {{ '}}' }}"
 
-  tasks: cat8000v-credential
+  tasks:
     - name: Add network machine credential
       ansible.controller.credential:
         name: "cat8000v-credential"
