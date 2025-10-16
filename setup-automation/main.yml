@@ -26,7 +26,7 @@
     loop:
       - devtools
       - netbox
-  #   - control
+      - control
       
 - name: Demo Playbook for the ansible-runner API
   hosts: all:!localhost
