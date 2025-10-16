@@ -167,35 +167,24 @@ tee /tmp/setup.yml << EOF
         validate_certs: false
         controller_username: admin
         controller_password: ansible123!        
-
-    # - name: Debug SANDBOX_ID
-    #   ansible.builtin.debug:
-    #     msg: "https://control.{{ SANDBOX_ID }}/api/controller/"
-    #   vars:
-    #     SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
     
     - name: (DECISIONS) Create an AAP Credential
       ansible.eda.credential:
         name: "AAP"
         description: "To execute jobs from EDA"
         inputs:
-   #       host: "https://control.{{ SANDBOX_ID }}.instruqt.io/api/controller/"
-           host: "https://control.ansible.workshop/api/controller/"
+          host: "https://control.ansible.workshop/api/controller/"
           username: "admin"
           password: "ansible123!"
         credential_type_name: "Red Hat Ansible Automation Platform"
-   #     controller_host: "https://control.{{ SANDBOX_ID }}.instruqt.io"
         controller_host: "https://control.ansible.workshop/api/controller/"
         controller_username: admin
         controller_password: ansible123!
         validate_certs: false
         organization_name: Default
-      # vars:
-      #   SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
     
     - name: (DECISIONS) Create a new DE
       ansible.eda.decision_environment:
-   #     controller_host: "https://control.{{ SANDBOX_ID }}.instruqt.io"
         controller_host: "https://control.ansible.workshop/api/controller/"
         controller_username: admin
         controller_password: ansible123!
@@ -204,8 +193,7 @@ tee /tmp/setup.yml << EOF
         name: "NetOps Decision Environment"
         description: "Decision Environment for NetOps workshop"
         image_url: "ghcr.io/ansible-network/autocon-de:latest"
-      # vars:
-      #   SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
+
       
 EOF
 export ANSIBLE_LOCALHOST_WARNING=False
