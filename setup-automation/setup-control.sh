@@ -72,7 +72,7 @@ tee /tmp/setup.yml << EOF
         controller_host: "https://localhost"
         controller_username: admin
         controller_password: ansible123!
-        validate_certs: fals
+        validate_certs: false
         inputs:
           username: "admin"
           password: "ansible123!"
