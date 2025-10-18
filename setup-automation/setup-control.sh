@@ -33,6 +33,7 @@ fi
 # Install collection(s)
 ansible-galaxy collection install ansible.eda
 ansible-galaxy collection install community.general
+ansible-galaxy collection install netbox.netbox
 
 
 ########
