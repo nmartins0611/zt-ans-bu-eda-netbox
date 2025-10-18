@@ -39,6 +39,7 @@ ansible-galaxy collection install netbox.netbox
 ########
 ## install python3 libraries needed for the Cloud Report
 dnf install -y python3-pip python3-libsemanage
+pip install pynetbox --user
 
 # Create a playbook for the user to execute
 tee /tmp/setup.yml << EOF
