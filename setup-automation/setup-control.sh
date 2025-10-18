@@ -30,9 +30,9 @@ else
     fi
 fi
 
-
-
-
+# Install collection(s)
+ansible-galaxy collection install ansible.eda
+ansible-galaxy collection install community.general
 
 
 ########
