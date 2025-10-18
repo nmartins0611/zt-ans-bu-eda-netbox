@@ -177,7 +177,7 @@ tee /tmp/setup.yml << EOF
           username: "admin"
           password: "ansible123!"
         credential_type_name: "Red Hat Ansible Automation Platform"
-        controller_host: "https://control.ansible.workshop/api/controller/"
+        controller_host: "https://localhost"
         controller_username: admin
         controller_password: ansible123!
         validate_certs: false
@@ -185,7 +185,7 @@ tee /tmp/setup.yml << EOF
     
     - name: (DECISIONS) Create a new DE
       ansible.eda.decision_environment:
-        controller_host: "https://control.ansible.workshop/api/controller/"
+        controller_host: "https://localhost"
         controller_username: admin
         controller_password: ansible123!
         validate_certs: false
