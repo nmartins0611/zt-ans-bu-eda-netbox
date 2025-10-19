@@ -152,3 +152,8 @@ tee /tmp/setup_netbox.yml << EOF
 EOF
 
 ANSIBLE_COLLECTIONS_PATH=/tmp/ansible-automation-platform-containerized-setup-bundle-2.5-9-x86_64/collections/:/root/.ansible/collections/ansible_collections/ ansible-playbook -i /tmp/inventory /tmp/setup_netbox.yml
+
+## Test API
+
+curl -H "Authorization: Token 0123456789abcdef0123456789abcdef01234567"   "http://netbox:8000/api/dcim/devices/?site=cisco-live-emea"
+
