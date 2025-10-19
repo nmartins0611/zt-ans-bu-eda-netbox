@@ -34,9 +34,9 @@ tabs:
     external: false
   - name: gitea
     url: https://gitea-${guid}.${domain}/
-  - name: VS Ccode
-    url: https://vscode-${guid}.${domain}
-    external: false
+  # - name: VS Ccode
+  #   url: https://vscode-${guid}.${domain}
+  #   external: false
   - name: ">_Terminal"
     url: /wetty_devtools
     secondary_name: ">_Netbox"
