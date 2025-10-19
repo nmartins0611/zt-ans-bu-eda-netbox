@@ -147,6 +147,7 @@ virtualmachines:
         value: "isolated"
     networks:
       - default
+      - secondary
     services:
       # - name: vscode-http
       #   ports:
@@ -218,6 +219,7 @@ virtualmachines:
         value: "isolated"
     networks:
       - default
+      - secondary
     services:
       - name: netbox-8000
         ports:
