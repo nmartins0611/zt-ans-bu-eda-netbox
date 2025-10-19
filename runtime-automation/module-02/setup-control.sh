@@ -13,7 +13,7 @@ tee /tmp/setup_netbox.yml << EOF
   vars:
     # netbox_url: "{{ lookup('env', 'NETBOX_API') }}"
     # netbox_token: "{{ lookup('env', 'NETBOX_TOKEN') }}"
-    netbox_url: "https://netbox:8000"
+    netbox_url: "http://netbox:8000"
     netbox_token: "0123456789abcdef0123456789abcdef01234567"
     site: cisco-live-emea
     manufacturer: cisco
