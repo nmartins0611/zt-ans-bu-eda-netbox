@@ -16,6 +16,8 @@ ingress:
     port: 8443 
   - protocol: TCP
     port: 8000
+  - protocol: TCP
+    port: 5001
     
 egress:
 - ports:
@@ -33,3 +35,5 @@ egress:
     port: 8443
   - protocol: TCP
     port: 8000
+  - protocol: TCP
+    port: 5001    
