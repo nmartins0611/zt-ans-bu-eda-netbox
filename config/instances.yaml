@@ -211,8 +211,8 @@ virtualmachines:
 
   - name: "netbox"
     image: "rhel-9.5"
-    memory: "2G"
-    cores: 2
+    memory: "8G"
+    cores: 4
     image_size: "30Gi"
     tags:
       - key: "AnsibleGroup"
