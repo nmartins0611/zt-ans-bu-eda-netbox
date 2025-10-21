@@ -56,7 +56,7 @@
 
     - name: Execute setup-node.sh if it exists
       when: r_script_test.stat.exists
-      shell: "sh -x /tmp/setup-scripts/setup-{{ ansible_host }}.sh > /tmp/setup-scripts/setup-{{ ansible_host }}.log 2>&1"
+      shell: "sh -x /tmp/setup-scripts/setup-{{ ansible_host }}.sh >> /tmp/setup-scripts/setup-{{ ansible_host }}.log 2>&1"
       become: true
       register: r_result
       environment:
