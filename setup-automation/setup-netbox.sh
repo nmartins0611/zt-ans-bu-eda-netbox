@@ -54,7 +54,7 @@ retry() {
 }
 
 # Clone repository
-retry git clone --depth=1 -b release https://github.com/netbox-community/netbox-docker.git /tmp/netbox-docker
+retry git clone --depth=1 -b 3.4.1 https://github.com/netbox-community/netbox-docker.git /tmp/netbox-docker
 
 # Create docker-compose override file
 cat <<EOF | tee /tmp/netbox-docker/docker-compose.override.yml
