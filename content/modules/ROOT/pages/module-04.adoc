@@ -1,7 +1,7 @@
 = Lab Guide: Integrating NetBox with Event-Driven Ansible
 :doctype: book
-:toc:
-:toc-title: Table of Contents
+:notoc:
+:notoc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -39,32 +39,17 @@ First, you will create a project in the **Automation Decisions** section of AAP.
 Currently, not all fields of an EDA Project can be edited after creation. If you make a mistake in the "Source control URL," you will need to delete and recreate the project.
 ====
 
-.   **Navigate to the Projects page.**
-+
-    In the `AAP` tab, go to **Automation Decisions** → **Projects**.
+.   **Navigate to the Projects page** in the `AAP` tab by going to **Automation Decisions** → **Projects**. **Click** the **Create project** button.
 
-.   **Create a new project.**
-+
-    **Click** the **Create project** button and fill out the form with the following details:
-+
-[cols="1,2a"]
-|===
-| Key | Value
-| Name | `netbox-rulebooks-project`
-| Organization | `Default`
-| Source control type | `Git`
-| Source control URL | `https://github.com/leogallego/aap-netbox-rulebooks-cisco-live.git`
-|===
+.   **Fill out the form** with the following details: *Name:* `netbox-rulebooks-project`, *Organization:* `Default`, *Source control type:* `Git`, *Source control URL:* `https://github.com/leogallego/aap-netbox-rulebooks-cisco-live.git`.
 
-.   **Save and sync the project.**
+.   **Save and sync the project** by clicking the blue **Create project** button.
 +
-    **Click** the blue **Create project** button.
+image::Feb-06-2025_at_00.09.45-image.png[Creating the EDA Project, opts="border"]
 +
-image::../assets/Feb-06-2025_at_00.09.45-image.png[Creating the EDA Project, opts="border"]
+Wait for the project *Status* to show a green checkmark and read **Completed** before moving on.
 +
-    Wait for the project *Status* to show a green checkmark and read **Completed** before moving on.
-+
-image::../assets/Feb-06-2025_at_00.10.57-image.png[Successful project sync, opts="border"]
+image::Feb-06-2025_at_00.10.57-image.png[Successful project sync, opts="border"]
 
 ---
 
@@ -72,15 +57,11 @@ image::../assets/Feb-06-2025_at_00.10.57-image.png[Successful project sync, opts
 
 This credential allows Event-Driven Ansible to run the desired action (a Job Template in Automation Execution) when a condition is triggered.
 
-.   **Navigate to the Credentials page.**
-+
-    Go to **Automation Decisions** → **Infrastructure** → **Credentials**.
+.   **Navigate to the Credentials page** by going to **Automation Decisions** → **Infrastructure** → **Credentials**.
 
-.   **Examine the pre-loaded credential.**
+.   **Examine the pre-loaded credential.** You will notice there is an `AAP` credential already created for you. This was pre-loaded because the URL is internal to the workshop platform. Take a look at its configuration, but be careful not to change any settings.
 +
-    You will notice there is an `AAP` credential already created for you. This was pre-loaded because the URL is internal to the workshop platform. Take a look at its configuration, but be careful not to change any settings.
-+
-image::../assets/Feb-06-2025_at_00.12.02-image.png[Pre-loaded AAP credential for EDA, opts="border"]
+image::Feb-06-2025_at_00.12.02-image.png[Pre-loaded AAP credential for EDA, opts="border"]
 
 .   **Exit the credential screen** by clicking the **Cancel** button.
 
@@ -95,37 +76,15 @@ Now you will create the **Rulebook Activation**, which is the service that will 
 Ensure you fill out all fields correctly. Like EDA Projects, Rulebook Activations currently cannot be edited. An error will require you to delete and re-create it.
 ====
 
-.   **Navigate to the Rulebook Activations page.**
-+
-    Go to **Automation Decisions** → **Rulebook Activations**.
+.   **Navigate to the Rulebook Activations page** by going to **Automation Decisions** → **Rulebook Activations**.
 
-.   **Create a new rulebook activation.**
-+
-    **Click** **Create rulebook activation** and fill out the form with the following details:
-+
-[cols="1,2a"]
-|===
-| Key | Value
-| Name | `NetBox Rulebooks`
-| Organization | `Default`
-| Project | `netbox-rulebooks-project`
-| Rulebook | `netbox-webhook.yml`
-| Credential | `AAP`
-| Decision environment | `NetOps Decision Environment`
-| Restart policy | `Always`
-| Log level | `Info`
-| Rulebook activation enabled? | `Yes` (checked)
-|===
+.   **Create a new rulebook activation.** **Click** **Create rulebook activation** and fill out the form with the following details: *Name:* `NetBox Rulebooks`, *Organization:* `Default`, *Project:* `netbox-rulebooks-project`, *Rulebook:* `netbox-webhook.yml`, *Credential:* `AAP`, *Decision environment:* `NetOps Decision Environment`, *Restart policy:* `Always`, *Log level:* `Info`, ensure *Rulebook activation enabled?* is checked.
 
-.   **Save the activation.**
-+
-    Leave the rest of the fields as they are and **click** the blue **Create rulebook activation** button.
+.   **Save the activation.** Leave the rest of the fields as they are and **click** the blue **Create rulebook activation** button.
 
-.   **Verify the activation status.**
+.   **Verify the activation status.** You will see the details page for the new activation. The *Activation status* will initially show as "Starting," but it should change to **Running** after a few seconds if everything was successful.
 +
-    You will see the details page for the new activation. The *Activation status* will initially show as "Starting," but it should change to **Running** after a few seconds if everything was successful.
-+
-image::../assets/Feb-05-2025_at_16.07.10-image.png[Running Rulebook Activation, opts="border"]
+image::Feb-05-2025_at_16.07.10-image.png[Running Rulebook Activation, opts="border"]
 
 ---
 
