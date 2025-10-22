@@ -1,7 +1,7 @@
 = Lab Guide: Exploring the Ansible Automation Platform Web UI
 :doctype: book
-:toc:
-:toc-title: Table of Contents
+:notoc:
+:notoc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -36,11 +36,11 @@ You will find the following sections:
 * **Projects:** A list of recently updated projects.
 * **Inventories:** A list of recently updated inventories.
 
-image::../assets/Oct-16-2024_at_02.36.20-image.png[Automation Execution menu highlighted, opts="border"]
+image::/Oct-16-2024_at_02.36.20-image.png[Automation Execution menu highlighted, opts="border"]
 
 A new feature in Ansible Automation Platform 2.5 is a section with quick start guides and interactive tutorials, which is very useful for getting started right after an installation.
 
-image:../assets/Oct-16-2024_at_02.29.14-image.png[Quick start guides on the dashboard, opts="border"]
+image:/Oct-16-2024_at_02.29.14-image.png[Quick start guides on the dashboard, opts="border"]
 
 Feel free to click on any of the titles or "View all" links to explore the corresponding sections.
 
@@ -50,15 +50,9 @@ Feel free to click on any of the titles or "View all" links to explore the corre
 
 An **inventory** is a collection of hosts against which playbooks can be run. It's the same concept as an inventory file you might be familiar with from the command line, but with added features and better reusability.
 
-. **Navigate to the Inventories page.**
+.   **Navigate to the Inventories page** by going to **Automation Execution** → **Infrastructure** → **Inventories** in the left navigation menu. Then, **explore the Demo Inventory** by clicking on its name. Take some time to explore the different tabs and familiarize yourself with the available fields. You will create your own inventory soon.
 +
-In the left navigation menu, go to **Automation Execution** → **Infrastructure** → **Inventories**.
-
-. **Explore the Demo Inventory.**
-+
-**Click** on the **Demo Inventory** that comes pre-loaded. Explore the different tabs to familiarize yourself with the available fields. You will create your own inventory soon.
-+
-image::../assets/inventory_1.png[Controller inventory list view, opts="border"]
+image::/inventory_1.png[Controller inventory list view, opts="border"]
 
 ---
 
@@ -66,15 +60,9 @@ image::../assets/inventory_1.png[Controller inventory list view, opts="border"]
 
 A **project** is a logical grouping of Ansible Playbooks within the automation controller. These playbooks typically reside in a source code version control system like Git.
 
-. **Navigate to the Projects page.**
+.   **Navigate to the Projects page** by going to **Automation Execution** → **Projects** in the left navigation menu. Then, **explore the Demo Project** by clicking on its name. Examine the different fields and tabs available.
 +
-In the left navigation menu, go to **Automation Execution** → **Projects**.
-
-. **Explore the Demo Project.**
-+
-**Click** on the **Demo Project** that comes pre-loaded. Examine the different fields and tabs available.
-+
-image::../assets/projects_1.png[Controller project list view, opts="border"]
+image::/projects_1.png[Controller project list view, opts="border"]
 
 ---
 
@@ -82,15 +70,9 @@ image::../assets/projects_1.png[Controller project list view, opts="border"]
 
 A **job template** is a definition and set of parameters for running an Ansible job. Job templates are useful for executing the same job many times and they encourage the reuse of Ansible content and collaboration between teams.
 
-. **Navigate to the Templates page.**
+.   **Navigate to the Templates page** by going to **Automation Execution** → **Templates** in the left navigation menu. Then, **explore the Demo Job Template** by clicking on its name to see its configuration. You will be creating your own Job Templates later in this workshop.
 +
-In the left navigation menu, go to **Automation Execution** → **Templates**.
-
-. **Explore the Demo Job Template.**
-+
-**Click** on the **Demo Job Template** that comes pre-loaded to see its configuration. You will be creating your own Job Templates later in this workshop.
-+
-image::../assets/job_template_1.png[Controller job template list view, opts="border"]
+image::/job_template_1.png[Controller job template list view, opts="border"]
 
 ---
 
