@@ -1,7 +1,7 @@
 = Lab Guide: Exploring Event-Driven Ansible Playbooks
 :doctype: book
-:toc:
-:toc-title: Table of Contents
+:notoc:
+:notoc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -43,15 +43,9 @@ The Job Templates to be run by a rulebook action are defined by their **name**. 
 
 First, you will verify that the Job Template for configuring NTP servers exists. This is one of the actions defined in your `netbox-webhooks.yml` rulebook.
 
-.   **Navigate to the Templates page.**
+.   **Navigate to the Templates page** in the `AAP` tab by going to **Automation Execution** → **Templates**. Then, **verify** that a Job Template named `Configure NTP Servers` is present in the list. This is the template that will be triggered when Event-Driven Ansible detects an update to the NTP server configuration in NetBox.
 +
-    In the `AAP` tab, go to **Automation Execution** → **Templates**.
-
-.   **Verify the Job Template exists.**
-+
-    Confirm that a Job Template named `Configure NTP Servers` is present in the list. This is the template that will be triggered when Event-Driven Ansible detects an update to the NTP server configuration in NetBox.
-+
-image::../assets/Apr-09-2025_at_17.46.55-image.png[Templates list view, opts="border"]
+image::Apr-09-2025_at_17.46.55-image.png[Templates list view, opts="border"]
 
 ---
 
@@ -59,13 +53,7 @@ image::../assets/Apr-09-2025_at_17.46.55-image.png[Templates list view, opts="bo
 
 Next, you will verify the existence of the second Job Template used in your rulebook.
 
-.   **Navigate to the Templates page.**
-+
-    If you are not already there, go to **Automation Execution** → **Templates**.
-
-.   **Verify the Job Template exists.**
-+
-    Confirm that a Job Template named `Configure Login Banner` is present in the list. This template will be triggered when Event-Driven Ansible detects an update to the login banner in NetBox.
+.   **Navigate to the Templates page** if you are not already there (**Automation Execution** → **Templates**). Then, **verify** that a Job Template named `Configure Login Banner` is present in the list. This template will be triggered when Event-Driven Ansible detects an update to the login banner in NetBox.
 
 ---
 
