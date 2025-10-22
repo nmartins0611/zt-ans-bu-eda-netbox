@@ -1,7 +1,7 @@
 = Lab Guide: Event-Driven Ansible Workflows
 :doctype: book
-:toc:
-:toc-title: Table of Contents
+:notoc:
+:notoc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -43,21 +43,13 @@ Remember not to confuse a **Job Template**, a **Jinja template**, and a **Workfl
 
 First, you will locate and explore the pre-configured workflow.
 
-.   **Navigate to the Templates page.**
+.   **Navigate to the Templates page** in the `AAP` tab by going to **Automation Execution** → **Templates**. **Look** for the workflow named **Provision New Device Workflow** and **click** on its name to open the details page.
 +
-    In the `AAP` tab, go to **Automation Execution** → **Templates**.
-
-.   **Open the workflow.**
+image::Feb-06-2025_at_17.54.01-image.png[Workflow Job Template in the list, opts="border"]
 +
-    **Look** for the workflow named **Provision New Device Workflow** and **click** on its name to open the details page.
+Then, on the *Details* tab for the workflow, **click** the blue **View workflow visualizer** button in the top right.
 +
-image::../assets/Feb-06-2025_at_17.54.01-image.png[Workflow Job Template in the list, opts="border"]
-
-.   **Open the Workflow Visualizer.**
-+
-    On the *Details* tab for the workflow, **click** the blue **View workflow visualizer** button in the top right.
-+
-image::../assets/Feb-06-2025_at_17.57.36-image.png[View workflow visualizer button, opts="border"]
+image::Feb-06-2025_at_17.57.36-image.png[View workflow visualizer button, opts="border"]
 
 ---
 
@@ -74,17 +66,13 @@ In this view, you can see a graphical representation of the relationship between
 
 Finally, you will manually launch the workflow to see it in action. In the next exercise, you will see how this same workflow is triggered automatically when a new device is added to NetBox.
 
-.   **Launch the workflow.**
+.   **Launch the workflow.** While in the **Workflow Visualizer**, **click** the three dots (`...`) in the top left, just below the workflow name, and select **Launch workflow** from the dropdown menu.
 +
-    While in the **Workflow Visualizer**, **click** the three dots (`...`) in the top left, just below the workflow name, and select **Launch workflow** from the dropdown menu.
+image::Feb-06-2025_at_18.01.33-image.png[Launching the workflow from the visualizer, opts="border"]
 +
-image::../assets/Feb-06-2025_at_18.01.33-image.png[Launching the workflow from the visualizer, opts="border"]
-
-.   **Observe the execution.**
+**Observe the execution.** The workflow will run the two Job Templates in parallel against all existing devices in your `NetBox Dynamic Inventory`. You can watch the progress in the real-time visualizer.
 +
-    The workflow will run the two Job Templates in parallel against all existing devices in your `NetBox Dynamic Inventory`. You can watch the progress in the real-time visualizer.
-+
-image::../assets/Feb-07-2025_at_01.57.45-image.png[Workflow running successfully, opts="border"]
+image::Feb-07-2025_at_01.57.45-image.png[Workflow running successfully, opts="border"]
 
 ---
 
