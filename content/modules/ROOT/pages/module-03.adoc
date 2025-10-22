@@ -1,7 +1,7 @@
 = Lab Guide: Introduction to Event-Driven Ansible Resources
 :doctype: book
-:toc:
-:toc-title: Table of Contents
+:notoc:
+:notoc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -36,42 +36,31 @@ First, switch to the `AAP` tab and log in.
 
 Just like Automation Controller, the Event-Driven Ansible controller requires several resources to be configured before you can activate a rulebook. There are three main resource types you will work with in the **Automation Decisions** section of the UI.
 
-image::../assets/automation_decisions.png[Automation Decisions menu, opts="border"]
+image::/automation_decisions.png[Automation Decisions menu, opts="border"]
 
 === Decision Environments
 
-If you're familiar with Ansible **Execution Environments** (EEs), you will find that **Decision Environments** (DEs) are conceptually similar. The main difference is that EEs are built to execute *Playbooks*, whereas DEs are built to execute *Rulebooks*. Both are container images that bundle all the necessary dependencies, including the required Ansible Collections.
+If you're familiar with Ansible **Execution Environments** (EEs), you will find that **Decision Environments** (DEs) are conceptually similar. The main difference is that EEs are built to execute *Playbooks*, whereas DEs are built to execute *Rulebooks*. Both are container images that bundle all the necessary dependencies, including the required Ansible Collections. Decision Environments must contain collections that provide `source plugins` for any event source you want to receive events from. For example, to receive events from Dynatrace, you would need a DE that includes the `dynatrace.event_driven_ansible` collection.
 
-Decision Environments must contain collections that provide `source plugins` for any event source you want to receive events from. For example, to receive events from Dynatrace, you would need a DE that includes the `dynatrace.event_driven_ansible` collection.
-
-. **Explore the Decision Environments.**
+.   **Explore the Decision Environments.** **Navigate** to **Automation Decisions** → **Decision Environments** in the left-hand sidebar. You will notice two pre-configured environments: **Default Decision Environment** (distributed by Red Hat, includes `ansible.eda`) and **NetOps Decision Environment** (custom-built for this workshop).
 +
-**Navigate** to **Automation Decisions** → **Decision Environments** in the left-hand sidebar. You will notice two pre-configured environments:
-+
-* **Default Decision Environment:** This is distributed by Red Hat and contains the `ansible.eda` collection, which includes supported source plugins for event sources like Kafka and Alertmanager.
-* **NetOps Decision Environment:** This is a custom-built DE created for this workshop.
-+
-image::../assets/eda_controller_de.png[Decision Environments list view, opts="border"]
+image::/eda_controller_de.png[Decision Environments list view, opts="border"]
 
 === Credentials
 
 Credentials in Event-Driven Ansible can be used to pull content from private repositories (for both Decision Environments and Projects), connect to external event sources, and secure inbound webhooks via Event Streams.
 
-. **Explore the Credentials.**
+.   **Explore the Credentials.** **Navigate** to **Automation Decisions** → **Infrastructure** → **Credentials**. You will see a pre-loaded `AAP` credential, which will be used for Rulebook Activations in upcoming exercises.
 +
-**Navigate** to **Automation Decisions** → **Infrastructure** → **Credentials**. You will see a pre-loaded `AAP` credential, which will be used for Rulebook Activations in upcoming exercises.
-+
-image::../assets/eda_controller_credentials.png[Credentials list view, opts="border"]
+image::/eda_controller_credentials.png[Credentials list view, opts="border"]
 
 === Projects
 
 Projects in Event-Driven Ansible are source control repositories that contain your *rulebooks*. They function just like Projects in the Automation Controller.
 
-. **Explore the Projects.**
+.   **Explore the Projects.** **Navigate** to **Automation Decisions** → **Projects**. This section is currently empty, but you will add a project in the next challenge.
 +
-**Navigate** to **Automation Decisions** → **Projects**. This section is currently empty, but you will add a project in the next challenge.
-+
-image::../assets/eda_controller_project.png[Projects list view, opts="border"]
+image::/eda_controller_project.png[Projects list view, opts="border"]
 
 ---
 
