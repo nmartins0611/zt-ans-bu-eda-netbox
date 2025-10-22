@@ -1,5 +1,5 @@
-# #!/bin/sh
-# echo "Starting module called module-02" >> /tmp/progress.log
+#!/bin/sh
+echo "Starting module called module-02" >> /tmp/progress.log
 
 # sed -i 's|netbox_url: "{{ lookup('\''env'\'', '\''NETBOX_API'\'') }}"|netbox_url: "http://netbox:8000"|' /tmp/setup.yml
 # sed -i 's|netbox_token: "{{ lookup('\''env'\'', '\''NETBOX_TOKEN'\'') }}"|netbox_token: "0123456789abcdef0123456789abcdef01234567"|' /tmp/setup.yml
