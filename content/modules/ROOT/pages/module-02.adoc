@@ -32,7 +32,7 @@ In this lab, you'll explore how Ansible Automation Platform syncs with NetBox an
 .NetBox
 * **Username:** `admin`
 * **Password:** `netbox`
-====
+
 
 
 == Task 1: Create the Inventory Project
