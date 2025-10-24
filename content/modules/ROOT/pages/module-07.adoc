@@ -24,7 +24,7 @@ In this workshop, you'll see Event-Driven Ansible (EDA) and NetBox in action by 
 .NetBox
 * **Username:** `admin`
 * **Password:** `netbox`
-====
+
 
 ---
 
