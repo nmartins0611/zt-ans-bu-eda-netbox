@@ -1,8 +1,5 @@
 = Lab Guide: Event-Driven Ansible and NetBox in Action
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to using Event-Driven Ansible to automatically respond to real-time changes in NetBox._
