@@ -1,8 +1,5 @@
 = Lab Guide: Exploring Event-Driven Ansible Playbooks
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to reviewing the Job Templates that will be run as actions by Event-Driven Ansible._
