@@ -39,15 +39,11 @@ In this lab, you'll explore how Ansible Automation Platform syncs with NetBox an
 
 == Task 1: Create the Inventory Project
 
-First, you will create a project in AAP that contains the NetBox dynamic inventory plugin configuration file.
+First, you will create a project in AAP that contains the NetBox dynamic inventory plugin configuration file. This project uses the `netbox.netbox.nb_inventory` plugin from the NetBox Labs Certified Collection to connect AAP to NetBox.
 
-.   **Navigate to the Projects page** in the `AAP` tab by going to **Automation Execution** → **Projects**. Then, **click** the **Create project** button.
+.   **Navigate to the Projects page** in the `AAP` tab by going to **Automation Execution** → **Projects**. Then, **click** the **Create project** button. **Fill out the form** with the following details: *Name:* `netbox-inventory-project`, *Organization:* `Default`, *Execution environment:* `netbox-ee`, *Source control type:* `Git`, *Source control URL:* `https://github.com/leogallego/netbox-inventory.git`. **Save the project** by clicking the blue **Create project** button.
 
-.   **Fill out the form** with the following details: *Name:* `netbox-inventory-project`, *Organization:* `Default`, *Execution environment:* `netbox-ee`, *Source control type:* `Git`, *Source control URL:* `https://github.com/leogallego/netbox-inventory.git`.
-
-.   **Save the project** by clicking the blue **Create project** button.
-
-.   **Review the inventory plugin file.** The `netbox.netbox.nb_inventory` plugin is configured via a file in the Git repository. The content of the `netbox_inventory` file looks like this:
+.   **Review the inventory plugin file.** The `netbox.netbox.nb_inventory` plugin is configured via a `netbox_inventory` file located within the `netbox-inventory-project`. The content looks like this:
 +
 [source,yaml]
 ----
@@ -64,13 +60,20 @@ compose:
   ansible_port: custom_fields.port
 ----
 
+[WARNING]
+====
+You might notice pre-loaded Projects, Templates, or other resources. Avoid modifying these unless instructed, as they support the lab infrastructure.
+====
+
 ---
 
 == Task 2: Create the NetBox Credential
 
-Next, you will create a custom credential type and a credential in AAP to securely store the NetBox API token.
+Next, you will create a Custom Credential Type in AAP to securely access the NetBox API.
 
-.   **Create a Custom Credential Type.** Go to **Automation Execution** → **Infrastructure** → **Credential Types** and click **Create credential type**. Enter `NetBox` for the *Name* and `NetBox API custom credential` for the *Description*. Paste the following into the *Input configuration*:
+=== Create a Credential Type
+
+.   Go to **Automation Execution** → **Infrastructure** → **Credential Types** and click **Create credential type**. Enter `NetBox` for the *Name* and `NetBox API custom credential` for the *Description*. Paste the following into the *Input configuration*:
 +
 [source,yaml]
 ----
@@ -98,11 +101,20 @@ env:
 +
 Finally, **click** **Create credential type**.
 
-.   **Get the NetBox API Token.** Go to the `netbox web` tab and log in. In the left sidebar, scroll to the bottom, expand the **Admin** menu, and click **API Tokens**. **Copy** the **Key Token** to your clipboard.
+=== Get the NetBox API Token
+
+.   Go to the `netbox web` tab and log in (admin/netbox). In the left sidebar, scroll down, expand the **Admin** menu, and click **API Tokens**. **Copy** the **Key Token** to your clipboard.
 +
 image::Feb-05-2025_at_15.06.21-image.png[Copying the NetBox API Token, opts="border"]
++
+[IMPORTANT]
+====
+If you have issues copying the token, use this value: `0123456789abcdef0123456789abcdef01234567`
+====
 
-.   **Create the NetBox Credential in AAP.** Return to the `AAP` tab. Go to **Automation Execution** → **Infrastructure** → **Credentials** and click **Create credential**. Fill in the details: *Name:* `NetBox API`, *Organization:* `Default`, *Credential Type:* `NetBox`, *NetBox Host URL:* `http://netbox:8000`, *NetBox API Token:* `0123456789abcdef0123456789abcdef01234567`. **Click** **Create credential**.
+=== Create the NetBox Credential in AAP
+
+.   Return to the `AAP` tab. Go to **Automation Execution** → **Infrastructure** → **Credentials** and click **Create credential**. Fill in the details: *Name:* `NetBox API`, *Organization:* `Default`, *Credential Type:* `NetBox`, *NetBox Host URL:* `http://netbox:8000`, *NetBox API Token:* (Paste the token you copied or use the one above). **Click** **Create credential**.
 +
 image::Feb-06-2025_at_12.11.09-image.png[Completed NetBox credential in AAP, opts="border"]
 
@@ -115,6 +127,8 @@ Now, you will create the inventory that will use NetBox as its source.
 .   **Navigate to the Inventories page** in the `AAP` tab by going to **Automation Execution** → **Infrastructure** → **Inventories**.
 
 .   **Create a new inventory.** **Click** **Create inventory** → **Create inventory**. Enter `NetBox Dynamic Inventory` for the *Name* and select `Default` for the *Organization*. **Click** **Create inventory**.
++
+image::create_inventory_button.png[Create inventory button, opts="border"]
 
 ---
 
@@ -122,19 +136,21 @@ Now, you will create the inventory that will use NetBox as its source.
 
 Finally, you will configure the dynamic source within your new inventory.
 
-.   **Navigate to the Sources tab.** Inside the `NetBox Dynamic Inventory`, click the **Sources** tab. Notice that the **Hosts** tab is currently empty.
-+
-image::../assets/Feb-05-2025_at_15.38.09-image.png[Inventory Sources tab, opts="border"]
+NOTE: If you navigated away, click on `NetBox Dynamic Inventory` in the list to edit it.
 
-.   **Create a new source.** **Click** the blue **Create source** button and fill out the form: *Name:* `netbox-inventory-source`, *Execution Environment:* `netbox-ee`, *Source:* `Sourced from a project`, *Credential:* `NetBox API`, *Project:* `netbox-inventory-project`, *Inventory file:* `netbox_inventory`, *Verbosity:* `(1) Info`. Under *Options*, check both `Overwrite` and `Update on launch`. Set *Cache timeout (seconds)* to `120`. **Click** **Create source**.
+.   Inside the `NetBox Dynamic Inventory`, click the **Sources** tab. Notice that the **Hosts** tab is currently empty.
++
+image::Feb-05-2025_at_15.38.09-image.png[Inventory Sources tab, opts="border"]
+
+.   **Create a new source.** **Click** the blue **Create source** button and fill out the form: *Name:* `netbox-inventory-source`, *Execution Environment:* `netbox-ee`, *Source:* `Sourced from a project`. Under *Source Details*, select *Credential:* `NetBox API`, *Project:* `netbox-inventory-project`, and *Inventory file:* `netbox_inventory`. Set *Verbosity* to `(1) Info`. Under *Options*, check both `Overwrite` and `Update on launch`. Set *Cache timeout (seconds)* to `120`. **Click** **Create source**.
 +
 image::Feb-05-2025_at_15.41.48-image.png[Completed inventory source form, opts="border"]
 
-.   **Sync the inventory source.** On the details page for the new source, **click** the **Launch inventory update** button in the top right.
+.   **Sync the inventory source.** On the details page for the `netbox-inventory-source`, **click** the **Launch inventory update** button in the top right to sync the devices.
 +
 image::Feb-06-2025_at_12.16.55-image.png[Launch inventory update button, opts="border"]
 
-.   **Verify the hosts.** Go back to the `NetBox Dynamic Inventory` details and click the **Hosts** tab. You should now see the Cisco Catalyst 8000v device, which was dynamically imported from NetBox.
+.   **Verify the hosts.** Go back to the `NetBox Dynamic Inventory` details (you can use the breadcrumbs at the top) and click the **Hosts** tab. You should now see the Cisco Catalyst 8000v device, which was dynamically imported from NetBox.
 +
 image::Feb-06-2025_at_12.18.18-image.png[Host successfully imported from NetBox, opts="border"]
 
