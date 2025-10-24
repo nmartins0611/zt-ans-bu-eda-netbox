@@ -37,7 +37,7 @@ Remember not to confuse a **Job Template**, a **Jinja template**, and a **Workfl
 .NetBox
 * **Username:** `admin`
 * **Password:** `netbox`
-====
+
 
 === Task 1: Explore the Workflow Job Template
 
