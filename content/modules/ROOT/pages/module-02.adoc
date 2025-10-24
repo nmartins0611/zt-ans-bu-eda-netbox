@@ -143,16 +143,3 @@ image::Feb-06-2025_at_12.18.18-image.png[Host successfully imported from NetBox,
 
 Press the `Next` button below to proceed to the next challenge.
 
-== Troubleshooting
-
-[WARNING]
-====
-* NetBox needs a couple of minutes to start up. If you can't see the NetBox login screen, go to the `netbox term` tab and run `docker compose --project-directory=/tmp/netbox-docker stop` followed by `docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker`.
-
-* For the Dynamic Inventory to work, some pre-loaded content is needed in NetBox. If you don't see any devices in the NetBox UI, run the following command in the `AAP` terminal:
-+
-[source,bash]
-----
-su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
-----
-====
