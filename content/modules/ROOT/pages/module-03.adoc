@@ -28,7 +28,6 @@ First, switch to the `AAP` tab and log in.
 .NetBox
 * **Username:** `admin`
 * **Password:** `netbox`
-====
 
 
 == Exploring Event-Driven Ansible Controller Resources
