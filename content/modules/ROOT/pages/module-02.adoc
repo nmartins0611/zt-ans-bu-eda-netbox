@@ -1,7 +1,7 @@
 = Lab Guide: Configuring a NetBox Dynamic Inventory
 :doctype: book
-:notoc:
-:notoc-title: Table of Contents
+:toc:
+:toc-title: Table of Contents
 :sectnums:
 :icons: font
 
@@ -32,8 +32,10 @@ In this lab, you'll explore how Ansible Automation Platform syncs with NetBox an
 .NetBox
 * **Username:** `admin`
 * **Password:** `netbox`
+====
+====
 
-
+---
 
 == Task 1: Create the Inventory Project
 
@@ -122,7 +124,7 @@ Finally, you will configure the dynamic source within your new inventory.
 
 .   **Navigate to the Sources tab.** Inside the `NetBox Dynamic Inventory`, click the **Sources** tab. Notice that the **Hosts** tab is currently empty.
 +
-image::Feb-05-2025_at_15.38.09-image.png[Inventory Sources tab, opts="border"]
+image::../assets/Feb-05-2025_at_15.38.09-image.png[Inventory Sources tab, opts="border"]
 
 .   **Create a new source.** **Click** the blue **Create source** button and fill out the form: *Name:* `netbox-inventory-source`, *Execution Environment:* `netbox-ee`, *Source:* `Sourced from a project`, *Credential:* `NetBox API`, *Project:* `netbox-inventory-project`, *Inventory file:* `netbox_inventory`, *Verbosity:* `(1) Info`. Under *Options*, check both `Overwrite` and `Update on launch`. Set *Cache timeout (seconds)* to `120`. **Click** **Create source**.
 +
@@ -142,3 +144,16 @@ image::Feb-06-2025_at_12.18.18-image.png[Host successfully imported from NetBox,
 
 Press the `Next` button below to proceed to the next challenge.
 
+== Troubleshooting
+
+[WARNING]
+====
+* NetBox needs a couple of minutes to start up. If you can't see the NetBox login screen, go to the `netbox term` tab and run `docker compose --project-directory=/tmp/netbox-docker stop` followed by `docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker`.
+
+* For the Dynamic Inventory to work, some pre-loaded content is needed in NetBox. If you don't see any devices in the NetBox UI, run the following command in the `AAP` terminal:
++
+[source,bash]
+----
+su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
+----
+====
