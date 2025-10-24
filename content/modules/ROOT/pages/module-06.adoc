@@ -1,8 +1,5 @@
 = Lab Guide: Event-Driven Ansible Workflows
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to connecting multiple playbooks using conditional logic in a Workflow Job Template._
