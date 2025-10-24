@@ -1,8 +1,5 @@
 = Lab Guide: Configuring a NetBox Dynamic Inventory
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to managing hosts and groups by configuring NetBox as a dynamic inventory source for Ansible Automation Platform._
