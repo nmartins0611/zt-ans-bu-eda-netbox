@@ -1,8 +1,5 @@
 = Lab Guide: Integrating NetBox with Event-Driven Ansible
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to setting the rules for conditions and actions that Event-Driven Ansible will use to react to events from NetBox._
