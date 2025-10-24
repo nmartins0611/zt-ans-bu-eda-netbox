@@ -1,8 +1,5 @@
 = Lab Guide: Introduction to Event-Driven Ansible Resources
 :doctype: book
-:toc:
-:toc-title: Table of Contents
-:sectnums:
 :icons: font
 
 _A guide to understanding the core components of Event-Driven Ansible in the Automation Platform UI: Decision Environments, Credentials, and Projects._
