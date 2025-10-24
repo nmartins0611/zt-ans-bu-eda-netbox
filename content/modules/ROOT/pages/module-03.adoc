@@ -30,7 +30,6 @@ First, switch to the `AAP` tab and log in.
 * **Password:** `netbox`
 ====
 
----
 
 == Exploring Event-Driven Ansible Controller Resources
 
