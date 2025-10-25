@@ -1,5 +1,7 @@
+#!/bin/sh
+echo "Starting module called module-05" >> /tmp/progress.log
 
-
+tee /tmp/setup_netbox-playbooks.yml << EOF
 
 ---
 - name: "5 - EDA: NetBox Playbooks"
@@ -12,7 +14,7 @@
 
   vars:
     controller_host: localhost
-    SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
+#    SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
     controller_username: admin
     controller_password: ansible123!
     inventory_name: netbox-inventory
@@ -110,3 +112,7 @@
         validate_certs: false
         controller_username: admin
         controller_password: ansible123!
+
+EOF
+
+ANSIBLE_COLLECTIONS_PATH=/tmp/ansible-automation-platform-containerized-setup-bundle-2.5-9-x86_64/collections/:/root/.ansible/collections/ansible_collections/ ansible-playbook -i /tmp/inventory /tmp/setup_netbox-playbooks.yml
