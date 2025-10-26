@@ -124,8 +124,8 @@ A list of recently updated inventories.
 
 *Step 3:* Review the Overview dashboard layout shown in the image below:
 
-[link=../assets/Oct-16-2024_at_02.36.20-image.png]
-image::../assets/Oct-16-2024_at_02.36.20-image.png[Overview Dashboard,border=1]
+[link=Oct-16-2024_at_02.36.20-image.png]
+image::Oct-16-2024_at_02.36.20-image.png[Overview Dashboard,border=1]
 
 *Step 4:* Click on any of the section titles (or "View all" links) to navigate to the corresponding section. We recommend you take a peek at each one.
 
@@ -133,8 +133,8 @@ image::../assets/Oct-16-2024_at_02.36.20-image.png[Overview Dashboard,border=1]
 
 *Step 5:* Scroll to the bottom of the Overview page and locate the new card-like section that includes *Quick Start Guides*.
 
-[link=../assets/Oct-16-2024_at_02.29.14-image.png]
-image::../assets/Oct-16-2024_at_02.29.14-image.png[Quick Start Guides,border=1]
+[link=Oct-16-2024_at_02.29.14-image.png]
+image::Oct-16-2024_at_02.29.14-image.png[Quick Start Guides,border=1]
 
 [TIP]
 ====
@@ -161,8 +161,8 @@ An *Inventory* is a collection of hosts against which playbooks may be launched 
 
 *Step 4:* Review the different tabs available to familiarize yourself with the fields.
 
-[link=../assets/inventory_1.png]
-image::../assets/inventory_1.png[Controller Inventory,border=1]
+[link=inventory_1.png]
+image::inventory_1.png[Controller Inventory,border=1]
 
 [NOTE]
 ====
@@ -187,8 +187,8 @@ For now, just explore the interface. You will create your own inventory soon!
 
 *Step 4:* Don't forget to examine the different tabs!
 
-[link=../assets/projects_1.png]
-image::../assets/projects_1.png[Controller Project,border=1]
+[link=projects_1.png]
+image::projects_1.png[Controller Project,border=1]
 
 '''
 
@@ -206,8 +206,8 @@ A *Job Template* is a definition and set of parameters for running an Ansible jo
 
 *Step 3:* Review the configuration options and parameters available.
 
-[link=../assets/job_template_1.png]
-image::../assets/job_template_1.png[Controller Job Template,border=1]
+[link=job_template_1.png]
+image::job_template_1.png[Controller Job Template,border=1]
 
 [NOTE]
 ====
