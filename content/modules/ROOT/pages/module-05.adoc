@@ -81,8 +81,8 @@ The following services are available in your lab environment:
 
 This Job Template will run when EDA "listens" to an update of the NTP servers configuration from NetBox.
 
-[link=../assets/Apr-09-2025_at_17.46.55-image.png]
-image::../assets/Apr-09-2025_at_17.46.55-image.png[Job Templates Overview,border=1]
+[link=Apr-09-2025_at_17.46.55-image.png]
+image::Apr-09-2025_at_17.46.55-image.png[Job Templates Overview,border=1]
 
 === Verify the Job Template
 
