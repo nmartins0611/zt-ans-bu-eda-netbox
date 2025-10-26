@@ -1,112 +1,239 @@
-= Lab Guide: Event-Driven Ansible Workflows
+= Exercise 6: Event-Driven Ansible - New Device Added Workflow
 :doctype: book
+:noexperimental:
+:notoc: left
+:notoclevels: 3
 :icons: font
+:source-highlighter: rouge
 
-_A guide to connecting multiple playbooks using conditional logic in a Workflow Job Template._
+'''
 
----
+== Overview
 
-== Lab Briefing
+=== Understanding Workflow Job Templates
 
-A **Workflow Job Template** is a series of connected Job Templates that are executed in a specific order to achieve a desired outcome. While an individual Job Template handles the tasks in a single playbook, a Workflow Job Template is designed to manage more complex automation scenarios involving multiple playbooks and decision-making processes based on success or failure.
+A *Workflow Job Template* is a series of connected *Job Templates* that are executed in a specific order to achieve a desired outcome. Meanwhile, an individual *Job Template* handles tasks in a single _Playbook_.
 
-Only Workflow Job Templates have a **Workflow Visualizer**, which provides a graphical interface for linking Job Templates together.
+*Workflow Job Templates* are designed to manage more complex automation scenarios involving multiple playbooks and decision-making processes (success or failure conditions for each).
 
----
-
-== Lab Guide: Hands-On Tasks
-
-In this exercise, you will explore a pre-created Workflow Job Template that is linked to the `New Device Added` rule in your rulebook.
+Only *Workflow Job Templates* have the *Workflow Visualizer* icon to connect the *Job Templates* in a Graphical User Interface.
 
 [WARNING]
 ====
-Remember not to confuse a **Job Template**, a **Jinja template**, and a **Workflow Job Template**. They are three separate concepts.
+Remember, do not confuse a *Job Template* with a *Jinja template*, or with a *Workflow Job Template*. They are three separate things!
 ====
+
+=== Lab Environment
+
+The following services are available in your lab environment:
+
+[cols="1,2,1", options="header"]
+|===
+|Service |Purpose |Access Port
+
+|AAP
+|Ansible Automation Platform Web UI
+|443
+
+|NetBox Web
+|NetBox Web Interface
+|8000
+
+|NetBox Term
+|NetBox Command Line
+|N/A
+
+|AAP Term
+|AAP Command Line
+|N/A
+|===
+
+=== Lab Credentials
 
 [IMPORTANT]
 ====
-.Lab Credentials
+*Ansible Automation Platform Credentials:*
+
+* *Username:* `admin`
+* *Password:* `ansible123!`
+
+*NetBox Credentials:*
+
+* *Username:* `admin`
+* *Password:* `netbox`
 ====
-.Ansible Automation Platform (AAP)
-* **Username:** `admin`
-* **Password:** `ansible123!`
 
-.NetBox
-* **Username:** `admin`
-* **Password:** `netbox`
+'''
+
+== Task 1: Explore the Job Workflow Template
+
+=== Overview
+
+We have already created a Job Workflow Template with the previous Job Templates to speed things up. This Workflow will be associated with the Rulebook condition of a `New Device Added` in `netbox-webhooks.yml`, and will be called `Provision New Device Workflow` just like we specified in the `run_workflow_template` action.
+
+=== Access the Workflow Template
+
+*Step 1:* Switch to the *AAP* tab and log in if required.
+
+*Step 2:* Click the *Automation Execution* dropdown in the sidebar to expand it.
+
+*Step 3:* Navigate to menu:Automation Execution[Templates].
+
+*Step 4:* Look for the *Provision New Device Workflow* in the list and click on it to explore it.
+
+[link=../assets/Feb-06-2025_at_17.54.01-image.png]
+image::../assets/Feb-06-2025_at_17.54.01-image.png[Provision New Device Workflow,border=1]
+
+=== Open the Workflow Visualizer
+
+*Step 5:* Once in the *Details* tab of the Workflow, look for the blue *View workflow visualizer* button at the top right and click on it.
+
+[link=../assets/Feb-06-2025_at_17.57.36-image.png]
+image::../assets/Feb-06-2025_at_17.57.36-image.png[View Workflow Visualizer Button,border=1]
+
+[NOTE]
 ====
+The Workflow Visualizer provides a graphical interface to view and manage the relationships between Job Templates in your workflow.
 ====
 
-=== Task 1: Explore the Workflow Job Template
+'''
 
-First, you will locate and explore the pre-configured workflow. A Job Workflow Template has already been created to speed things up. This Workflow, named `Provision New Device Workflow`, corresponds to the `New Device Added` condition in your `netbox-webhooks.yml` rulebook, matching the `run_workflow_template` action specified there.
+== Task 2: Examine the Workflow Visualizer
 
-.   **Switch to the `AAP` tab** and log in if required. **Navigate to the Templates page** by expanding the **Automation Execution** dropdown in the sidebar and clicking the **Templates** link. **Look** for the workflow named **Provision New Device Workflow** and **click** on its name to explore it.
-+
-image::../assets/Feb-06-2025_at_17.54.01-image.png[Workflow Job Template in the list, opts="border"]
-+
-Once in the *Details* tab of the Workflow, **click** the blue **View workflow visualizer** button at the top right.
-+
-image::../assets/Feb-06-2025_at_17.57.36-image.png[View workflow visualizer button, opts="border"]
+=== Understanding the Workflow Structure
 
----
+In this view, you can see a graphical representation of the relationship between the different Job Templates.
 
-=== Task 2: Understand the Workflow Visualizer
+*Step 1:* Review the workflow structure displayed in the Workflow Visualizer.
 
-In this view, you can see a graphical representation of the relationship between the different Job Templates. This workflow is composed of two Job Templates that will run in parallel:
+You should see a workflow composed of two Job Templates:
 
-* `Configure NTP Servers` (aliased as `NTP`)
-* `Configure Login Banner` (aliased as `Banner`)
+. *Configure NTP Servers* - Called `NTP` for short
+. *Configure Login Banner* - Called `Banner` for short
 
----
+[TIP]
+====
+The Workflow Visualizer shows the execution order and any conditional logic between Job Templates. This makes it easy to understand and manage complex automation workflows.
+====
 
-=== Task 3: Manually Launch the Workflow
+'''
 
-Finally, you will manually launch the workflow to see it in action. In the next exercise, you will see how this same workflow is triggered automatically when a new device is added to NetBox.
+== Task 3: Launch the Workflow
 
-.   While still in the **Workflow Visualizer** screen, **click the three dots (`...`)** located just below the workflow name at the top left, and select **Launch workflow** from the dropdown menu.
-+
-image::../assets/Feb-06-2025_at_18.01.33-image.png[Launching the workflow from the visualizer, opts="border"]
-+
-The workflow will then run the two Job Templates against all existing devices in your `NetBox Dynamic Inventory`. You can watch the progress in the real-time visualizer.
-+
-image::../assets/Feb-07-2025_at_01.57.45-image.png[Workflow running successfully, opts="border"]
+=== Manual Workflow Execution
 
----
+Now let's test the workflow by launching it manually.
+
+*Step 1:* Within the same *Workflow Visualizer* screen, locate the three dots icon right below the workflow name at the top left.
+
+*Step 2:* Click the *3 dots* icon and select *Launch workflow* from the dropdown menu.
+
+[link=../assets/Feb-06-2025_at_18.01.33-image.png]
+image::../assets/Feb-06-2025_at_18.01.33-image.png[Launch Workflow,border=1]
+
+*Step 3:* The workflow will run the two Job Templates on all existing devices in our `NetBox Dynamic Inventory`.
+
+[link=../assets/Feb-07-2025_at_01.57.45-image.png]
+image::../assets/Feb-07-2025_at_01.57.45-image.png[Workflow Execution,border=1]
+
+*Step 4:* Monitor the workflow execution and verify that both Job Templates complete successfully.
+
+[NOTE]
+====
+In the next exercise, we will see how this workflow gets triggered automatically when we add a device to our site in NetBox. This demonstrates the power of Event-Driven Ansible!
+====
+
+'''
+
+== Summary
+
+In this exercise, you've accomplished the following:
+
+* Explored a pre-configured Workflow Job Template
+* Learned how Workflow Job Templates connect multiple Job Templates
+* Used the Workflow Visualizer to understand the workflow structure
+* Manually launched a workflow to provision device configurations
+
+This workflow is now ready to be automatically triggered by Event-Driven Ansible when new devices are added to NetBox.
+
+'''
 
 == Next Steps
 
-Press the `Next` button below to proceed to the next challenge, where you will trigger this workflow automatically using an event from NetBox.
+Excellent work! You've successfully explored and tested a Workflow Job Template that will be automatically triggered by Event-Driven Ansible.
+
+*Step 1:* Press the *Next* button below to go to the next section once you've completed the task to begin exploring Event-Driven Ansible in action.
+
+'''
 
 == Troubleshooting
 
 [WARNING]
 ====
-.Job Templates Not Pre-created?
-If the Job Templates are missing, the `NetBox Dynamic Inventory` may not have been created correctly. First, go back to the inventory creation exercise and complete it. Then, run the following command in the `AAP Terminal` tab:
+*Missing Job Templates or Workflow*
+
+For the Job Templates to be pre-created in Exercise 5, the `NetBox Dynamic Inventory` must exist.
+
+*If the inventory or templates don't exist:*
+
+*Step 1:* First, go to Exercise 2 and create the `NetBox Dynamic Inventory`.
+
+*Step 2:* Then, run the following command in the *AAP Terminal* tab:
+
 [source,bash]
 ----
 su - rhel -c 'cd /home/rhel; ansible-navigator run /home/rhel/5-eda-playbooks.yml --mode stdout --penv _SANDBOX_ID'
 ----
+
+*Step 3:* Wait for the playbook to complete, then refresh the AAP web interface.
 ====
 
 [WARNING]
 ====
-.NetBox Not Responding?
-NetBox needs a couple of minutes to start up. If you cannot see the NetBox login screen, go to the `netbox term` tab and run the following commands:
-[source,bash]
-----
-docker compose --project-directory=/tmp/netbox-docker stop
-docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
-----
-====
+*Missing NetBox Pre-loaded Content*
 
-[WARNING]
-====
-.NetBox Devices Missing?
-For the Dynamic Inventory to work, some pre-loaded content is needed in NetBox. If you can't see devices in the NetBox UI, run the following command in the `AAP Terminal` tab:
+For the Dynamic Inventory in Exercise 2 to work, we need some NetBox pre-loaded content.
+
+*If you can't see devices in the NetBox tab:*
+
+*Step 1:* Run the following command:
+
 [source,bash]
 ----
 su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
 ----
+
+*Step 2:* Wait for the setup playbook to complete, then refresh the NetBox web interface.
 ====
+
+[WARNING]
+====
+*NetBox Startup Issues*
+
+NetBox needs a couple of minutes to get started.
+
+*If you can't see the NetBox login screen in the NetBox tab:*
+
+*Step 1:* Go to the *netbox term* tab.
+
+*Step 2:* Run the following command to stop NetBox:
+
+[source,bash]
+----
+docker compose --project-directory=/tmp/netbox-docker stop
+----
+
+*Step 3:* Run the following command to restart NetBox services:
+
+[source,bash]
+----
+docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
+----
+
+*Step 4:* Wait 2-3 minutes for the services to fully start, then try accessing NetBox again.
+====
+
+'''
+
+[.text-center]
+_End of Exercise 6_
