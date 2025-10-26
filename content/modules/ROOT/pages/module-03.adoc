@@ -1,71 +1,198 @@
-= Lab Guide: Introduction to Event-Driven Ansible Resources
+= Exercise 3: Event-Driven Ansible - Automation Decisions
 :doctype: book
+:experimental:
+:toc: left
+:toclevels: 3
 :icons: font
+:source-highlighter: rouge
 
-_A guide to understanding the core components of Event-Driven Ansible in the Automation Platform UI: Decision Environments, Credentials, and Projects._
+'''
 
----
+== Overview
 
-== Introduction to Automation Decisions
+=== What is Event-Driven Ansible?
 
-Event-Driven Ansible allows you to codify your response to infrastructure and application events, making your automation more resilient and responsive. While **Automation Controller** (via playbooks) automates a response, **Event-Driven Ansible** (via rulebooks) automates the recognition of the event itself. By describing the conditions for an action and specifying the response, you can respond to issues much more quickly.
+Event-Driven Ansible allows you to rip out more pages of your hardcopy runbook. While *Automation Controller* (through *Playbooks*) may automate your response to particular events, Event-Driven Ansible (through *Rulebooks*) codifies the symptoms that you have to recognize from an event before being able to respond.
 
-With Ansible Automation Platform 2.5, all components are co-located in a new, unified user experience. You will find the **Automation Decisions** (Event-Driven Ansible) UI in the same interface as **Automation Execution** (Automation Controller).
+If you're able to describe the conditions for action and specify the response to those conditions, your automation will become more resilient and allow your organization to respond with automation much quicker.
 
-First, switch to the `AAP` tab and log in.
+=== Unified User Experience
+
+With Ansible Automation Platform 2.5, components of the platform are co-located under a new unified user experience. Now you will find the Automation Decisions (EDA) user interface in the same screen as Automation Execution (Controller).
+
+=== Getting Started
+
+*Step 1:* If you are not in the AAP tab, switch to the *AAP* tab.
+
+*Step 2:* Log in using the credentials below.
+
+=== Lab Environment
+
+The following services are available in your lab environment:
+
+[cols="1,2,1", options="header"]
+|===
+|Service |Purpose |Access Port
+
+|AAP
+|Ansible Automation Platform Web UI
+|443
+
+|NetBox Web
+|NetBox Web Interface
+|8000
+
+|VS Code
+|Visual Studio Code Editor
+|80
+
+|Terminal-1
+|DevTools Command Line
+|N/A
+|===
+
+=== Lab Credentials
 
 [IMPORTANT]
 ====
-.Lab Credentials
+*Ansible Automation Platform Credentials:*
+
+* *Username:* `admin`
+* *Password:* `ansible123!`
+
+*NetBox Credentials:*
+
+* *Username:* `admin`
+* *Password:* `netbox`
 ====
-.Ansible Automation Platform (AAP)
-* **Username:** `admin`
-* **Password:** `ansible123!`
 
-.NetBox
-* **Username:** `admin`
-* **Password:** `netbox`
+'''
+
+== EDA Controller Resources
+
+=== Understanding EDA Resources
+
+Just like *Automation Controller* has resources needed for job template execution, *Event-Driven Ansible Controller* defines resources needed for execution of rulebooks. There are three main resource types that have to be defined before creating a rulebook activation that will listen for incoming events.
+
+[link=../assets/automation_decisions.png]
+image::../assets/automation_decisions.png[Automation Decisions Overview,border=1]
+
+'''
+
+== Decision Environments
+
+=== What are Decision Environments?
+
+If you're already familiar with Ansible *Execution Environments*, you will find *Decision Environments* very similar.
+
+The main differences between the two are:
+
+* *Execution Environments (EEs)* are built to contain tools to execute _Playbooks_
+* *Decision Environments (DEs)* contain tools to execute _Rulebooks_
+
+Both are container images that contain all the resources needed to execute Ansible playbooks and rulebooks, including the required collections.
+
+=== Source Plugins in Decision Environments
+
+Decision Environments are also built with collections that contain the *source plugins* for any source you want to receive events from. This means that if you'd like to receive events from `Dynatrace`, for example, you would have to install the collection `dynatrace.event_driven_ansible` in order to leverage the source plugin for `Dynatrace`.
+
+=== Explore Decision Environments
+
+*Step 1:* In the left-hand sidebar menu in AAP, navigate to menu:Automation Decisions[Infrastructure > Decision Environments].
+
+*Step 2:* Take a look at the available Decision Environments.
+
+You'll notice that there are already Decision Environments added to AAP:
+
+*Default Decision Environment*:: 
+This was added at installation time and is distributed by Red Hat as `de-supported`.
+
+*NetOps Decision Environment*:: 
+This was created for this workshop and is custom-built. This Decision Environment contains the collection `ansible.eda` which ships _supported plugins_ for several event sources.
+
+[link=../assets/eda_controller_de.png]
+image::../assets/eda_controller_de.png[EDA Controller Decision Environments,border=1]
+
+[NOTE]
 ====
+Decision Environments are essential for Event-Driven Ansible to function properly, as they contain all the necessary dependencies and source plugins.
 ====
 
----
+'''
 
-== Exploring Event-Driven Ansible Controller Resources
+== Credentials
 
-Just like Automation Controller, the Event-Driven Ansible controller requires several resources to be configured before you can activate a rulebook. There are three main resource types you will work with in the **Automation Decisions** section of the UI.
+=== Understanding EDA Credentials
 
-image::automation_decisions.png[Automation Decisions menu, opts="border"]
+Credentials can be leveraged for pull operations for both Decision Environments and Projects, used to connect to external event sources, and to secure inbound webhook endpoints via Event Streams.
 
-=== Decision Environments
+=== Explore Credentials
 
-If you're familiar with Ansible **Execution Environments** (EEs), you will find that **Decision Environments** (DEs) are conceptually similar. The main difference is that EEs are built to execute *Playbooks*, whereas DEs are built to execute *Rulebooks*. Both are container images that bundle all the necessary dependencies, including the required Ansible Collections. Decision Environments must contain collections that provide `source plugins` for any event source you want to receive events from. For example, to receive events from Dynatrace, you would need a DE that includes the `dynatrace.event_driven_ansible` collection.
+*Step 1:* In the left-hand sidebar, navigate to menu:Automation Decisions[Infrastructure > Credentials].
 
-To explore the available Decision Environments, **navigate** to **Automation Decisions** → **Decision Environments** in the left-hand sidebar. You will notice two pre-configured environments: **Default Decision Environment** (distributed by Red Hat, includes `ansible.eda`) and **NetOps Decision Environment** (custom-built for this workshop).
-+
-image::eda_controller_de.png[Decision Environments list view, opts="border"]
+*Step 2:* Review the available credentials.
 
----
+If you have private repositories for either Decision Environments or Projects, you can create a credential from this section.
 
-=== Credentials
+By default, you will see:
 
-Credentials in Event-Driven Ansible can be used to pull content from private repositories (for both Decision Environments and Projects), connect to external event sources, and secure inbound webhooks via Event Streams.
+*Decision Environment Container Registry*:: 
+This credential is added at installation time.
 
-To explore the existing Credentials, **navigate** to **Automation Decisions** → **Infrastructure** → **Credentials**. You will see a pre-loaded `AAP` credential, which will be used for Rulebook Activations in upcoming exercises.
-+
-image::eda_controller_credentials.png[Credentials list view, opts="border"]
+*AAP*:: 
+This credential was pre-loaded into the AAP instance for this workshop. This credential will be used for *Rulebook Activations* in upcoming exercises.
 
----
+[link=../assets/eda_controller_credentials.png]
+image::../assets/eda_controller_credentials.png[EDA Controller Credentials,border=1]
 
-=== Projects
+[TIP]
+====
+Credentials in EDA Controller provide secure access to external systems and repositories, ensuring your automation remains secure.
+====
 
-Projects in Event-Driven Ansible are source control repositories that contain your *rulebooks*. They function just like Projects in the Automation Controller.
+'''
 
-To explore Projects, **navigate** to **Automation Decisions** → **Projects**. This section is currently empty, but you will add a project in the next challenge.
-+
-image::eda_controller_project.png[Projects list view, opts="border"]
+== Projects
 
----
+=== What are Projects in EDA?
+
+Projects are really just like they are in *Automation Controller* (under the *Automation Execution* heading). These projects represent source control repositories that contain your _rulebooks_.
+
+=== Explore Projects
+
+*Step 1:* In the left-hand sidebar, navigate to menu:Automation Decisions[Projects].
+
+*Step 2:* Review the available projects that contain rulebooks.
+
+[link=../assets/eda_controller_project.png]
+image::../assets/eda_controller_project.png[EDA Controller Projects,border=1]
+
+[NOTE]
+====
+Projects in EDA Controller work the same way as in Automation Controller, linking to Git repositories that contain your automation content - in this case, rulebooks instead of playbooks.
+====
+
+'''
+
+== Summary
+
+In this exercise, you've learned about the key components of Event-Driven Ansible:
+
+* *Decision Environments:* Container images with tools to execute rulebooks
+* *Credentials:* Secure access to external systems and repositories
+* *Projects:* Source control repositories containing your rulebooks
+
+These three resources work together to enable Event-Driven Ansible to listen for events and automatically respond based on the conditions you define in your rulebooks.
+
+'''
 
 == Next Steps
 
-You have now familiarized yourself with the core resource types in Event-Driven Ansible. Press the `Next` button below to proceed to the next challenge, where you will create your first EDA Project.
+Congratulations! You've completed the introduction to Event-Driven Ansible and explored its core components.
+
+*Step 1:* Press the *Next* button below to go to the next challenge.
+
+'''
+
+[.text-center]
+_End of Exercise 3_
