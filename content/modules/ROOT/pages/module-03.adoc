@@ -1,8 +1,8 @@
 = Exercise 3: Event-Driven Ansible - Automation Decisions
 :doctype: book
-:experimental:
-:toc: left
-:toclevels: 3
+:noexperimental:
+:notoc: left
+:notoclevels: 3
 :icons: font
 :source-highlighter: rouge
 
