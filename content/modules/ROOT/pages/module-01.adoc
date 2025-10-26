@@ -1,100 +1,263 @@
-= Lab Guide: Exploring the Ansible Automation Platform Web UI
+= Network Automation and Sources of Truth
 :doctype: book
-:notoc:
-:notoc-title: Table of Contents
-:sectnums:
+:notoc: left
+:notoclevels: 3
 :icons: font
+:source-highlighter: rouge
 
-_An introduction to the Ansible Automation Platform web UI, covering the Overview, Inventories, Projects, and Job Templates._
-
----
+'''
 
 == Lab Overview
 
-Welcome to the Red Hat Ansible Automation Platform. The new unified web UI in Ansible Automation Platform 2.5 has integrated all components into a single dashboard. In this workshop, we will explore the **Automation Execution** (automation controller) and **Automation Decision** (Event-Driven Ansible) functionalities.
+=== Introduction
 
-First, log in to Ansible Automation Platform to begin the exercises.
+Welcome to the *Network Automation and Sources of Truth* laboratory. In this hands-on lab, you'll learn how to integrate Ansible Automation Platform with NetBox to create a powerful network automation solution.
+
+*Ansible Automation Platform* is a unified solution for strategic automation. It combines the security, features, integrations, and flexibility needed to scale automation across domains, orchestrate essential workflows, and optimize IT operations to successfully adopt enterprise AI.
+
+*NetBox* is widely deployed in enterprise footprints and is trusted by IT, networking, and datacenter teams. Combining the capabilities of DCIM and IPAM into a comprehensive network source of truth, NetBox is the perfect partner to Ansible Automation Platform and your network.
+
+*NetOps* is an approach to network operations that focuses on rapid deployments and agility. It is also referred to as NetOps 2.0 or NetDevOps, and has become the standard operating procedure for digital enterprises working to keep pace with customer expectations. NetOps includes elements of automation, orchestration, and continuous validation to enable agile development and application delivery in modern IT organizations with complex network infrastructure.
+
+=== What You'll Learn
+
+In this laboratory, we will get started with Network Automation and Sources of Truth using *Ansible Automation Platform 2.5* together with *NetBox*. You will complete hands-on exercises to:
+
+* Configure NetBox as a Dynamic Inventory in Ansible Automation Platform using their *Certified Content Collection*
+* Integrate with *Event-Driven Ansible* through webhooks to listen to events in your network and take action
+
+=== Lab Environment
+
+The following services are available in your lab environment:
+
+[cols="1,2,1", options="header"]
+|===
+|Service |Purpose |Access Port
+
+|AAP
+|Ansible Automation Platform Web UI
+|443
+
+|NetBox Web
+|NetBox Web Interface
+|8000
+
+|Gitea
+|Git Repository Service
+|3000
+
+|Terminal
+|DevTools Command Line
+|N/A
+
+|NetBox Term
+|NetBox Command Line
+|N/A
+|===
+
+'''
+
+== Exercise 1: Introduction to Ansible Automation Platform Web UI
+
+=== Overview
+
+Welcome to Red Hat Ansible Automation Platform. The new unified web UI in Ansible Automation Platform 2.5 has integrated all the components into a single control dashboard. We will be exploring the Automation Execution (automation controller) and Automation Decision (event-driven Ansible) functionality during this workshop.
+
+For this exercise, we will focus on the *Automation Execution (Automation controller)* and its features.
+
+=== Login Credentials
 
 [IMPORTANT]
 ====
-.Login Credentials
-* **Username:** `admin`
-* **Password:** `ansible123!`
+Use the following credentials to log in to Ansible Automation Platform:
+
+* *Username:* `admin`
+* *Password:* `ansible123!`
 ====
 
----
+=== Getting Started
 
-== Task 1: Explore the Overview Dashboard
+*Step 1:* Switch to the *AAP* tab to access the Ansible Automation Platform login screen.
 
-Your first task is to explore the **Overview** dashboard. The initial screen will show little information due to the lack of recent activity, but you can compare it again after you finish the lab to see the difference.
+*Step 2:* Enter the credentials provided above to log in.
 
-You will find the following sections:
+*Step 3:* Take a moment to familiarize yourself with the unified UI.
 
-* **Resource counts:** A summary of your *hosts*, *projects*, and *inventories*.
-* **Job activity:** A graph showing job runs from the past month.
-* **Jobs:** A list of recently run jobs.
-* **Projects:** A list of recently updated projects.
-* **Inventories:** A list of recently updated inventories.
+[NOTE]
+====
+In the following exercises, we will show you how to configure NetBox as the Dynamic Inventory source for Ansible Automation Platform and how to set up Event-Driven Ansible in the web UI, just as you would in a corporate environment to run your automation.
+====
 
-image::/Oct-16-2024_at_02.36.20-image.png[Automation Execution menu highlighted, opts="border"]
+'''
 
-A new feature in Ansible Automation Platform 2.5 is a section with quick start guides and interactive tutorials, which is very useful for getting started right after an installation.
+== Exercise 2: Explore the Overview Dashboard
 
-image:/Oct-16-2024_at_02.29.14-image.png[Quick start guides on the dashboard, opts="border"]
+=== Task Description
 
-Feel free to click on any of the titles or "View all" links to explore the corresponding sections.
+*Step 1:* Navigate to the *Overview* page (this is typically the landing page after login).
 
----
+*Step 2:* Explore the dashboard sections listed below.
 
-== Task 2: Explore the Inventories Section
+[NOTE]
+====
+The initial screen will show limited information due to the lack of playbooks, hosts, and executions. Take a look now, and you will be able to compare it to the end result once you've finished the lab.
+====
 
-An **inventory** is a collection of hosts against which playbooks can be run. It's the same concept as an inventory file you might be familiar with from the command line, but with added features and better reusability.
+=== Dashboard Sections
 
-.   **Navigate to the Inventories page** by going to **Automation Execution** → **Infrastructure** → **Inventories** in the left navigation menu. Then, **explore the Demo Inventory** by clicking on its name. Take some time to explore the different tabs and familiarize yourself with the available fields. You will create your own inventory soon.
-+
-image::/inventory_1.png[Controller inventory list view, opts="border"]
+You will find the following card-like sections in the *Overview* screen:
 
----
+*Resource Counts*:: 
+This section displays a summary of *hosts*, *projects*, and *inventories*.
 
-== Task 3: Explore the Projects Section
+*Job Activity*:: 
+This section shows a graph with the past month's job runs.
 
-A **project** is a logical grouping of Ansible Playbooks within the automation controller. These playbooks typically reside in a source code version control system like Git.
+*Jobs*:: 
+A list of recently run jobs.
 
-.   **Navigate to the Projects page** by going to **Automation Execution** → **Projects** in the left navigation menu. Then, **explore the Demo Project** by clicking on its name. Examine the different fields and tabs available.
-+
-image::/projects_1.png[Controller project list view, opts="border"]
+*Projects*:: 
+A list of recently updated projects.
 
----
+*Inventories*:: 
+A list of recently updated inventories.
 
-== Task 4: Explore Job Templates
+*Step 3:* Review the Overview dashboard layout shown in the image below:
 
-A **job template** is a definition and set of parameters for running an Ansible job. Job templates are useful for executing the same job many times and they encourage the reuse of Ansible content and collaboration between teams.
+[link=../assets/Oct-16-2024_at_02.36.20-image.png]
+image::../assets/Oct-16-2024_at_02.36.20-image.png[Overview Dashboard,border=1]
 
-.   **Navigate to the Templates page** by going to **Automation Execution** → **Templates** in the left navigation menu. Then, **explore the Demo Job Template** by clicking on its name to see its configuration. You will be creating your own Job Templates later in this workshop.
-+
-image::/job_template_1.png[Controller job template list view, opts="border"]
+*Step 4:* Click on any of the section titles (or "View all" links) to navigate to the corresponding section. We recommend you take a peek at each one.
 
----
+=== Quick Start Guides
+
+*Step 5:* Scroll to the bottom of the Overview page and locate the new card-like section that includes *Quick Start Guides*.
+
+[link=../assets/Oct-16-2024_at_02.29.14-image.png]
+image::../assets/Oct-16-2024_at_02.29.14-image.png[Quick Start Guides,border=1]
+
+[TIP]
+====
+This new section provides interactive in-line tutorials that are very useful for learning about all the features in AAP right after you install it. You can get instructions for using them without leaving the interface.
+====
+
+'''
+
+== Exercise 3: Explore the Inventories Section
+
+=== What is an Inventory?
+
+An *Inventory* is a collection of hosts against which playbooks may be launched or run. Basically, these are the "managed nodes" or devices we are automating. The inventory in AAP is the same concept as an inventory file you might know from working with Ansible on the command line.
+
+*Inventories* in AAP have several advantages over file-based ones. You get all the functionality from traditional inventory files, with added features and better reusability.
+
+=== Exploring the Demo Inventory
+
+*Step 1:* In the left sidebar, click on the *Automation Execution* drop-down menu to expand it.
+
+*Step 2:* Navigate to *Infrastructure* → *Inventories*.
+
+*Step 3:* Explore the *Demo Inventory* that comes pre-loaded.
+
+*Step 4:* Review the different tabs available to familiarize yourself with the fields.
+
+[link=../assets/inventory_1.png]
+image::../assets/inventory_1.png[Controller Inventory,border=1]
+
+[NOTE]
+====
+For now, just explore the interface. You will create your own inventory soon!
+====
+
+'''
+
+== Exercise 4: Explore the Projects Section
+
+=== What is a Project?
+
+*Projects* are logical groups of Ansible playbooks in automation controller. These playbooks usually reside in a source code version control system like Git (and platforms such as GitHub or GitLab). With *Projects*, we can reference a repository or directory with one or several playbooks that we will later use.
+
+=== Exploring the Demo Project
+
+*Step 1:* In the sidebar menu, under *Automation Execution*, click on the *Projects* submenu.
+
+*Step 2:* Explore the *Demo Project* that comes pre-loaded.
+
+*Step 3:* Review all the fields available when creating a project.
+
+*Step 4:* Don't forget to examine the different tabs!
+
+[link=../assets/projects_1.png]
+image::../assets/projects_1.png[Controller Project,border=1]
+
+'''
+
+== Exercise 5: Explore the Templates Section
+
+=== What is a Job Template?
+
+A *Job Template* is a definition and set of parameters for running an Ansible job. Job templates are useful to run the same job many times. They also encourage the reuse of Ansible Playbook content and collaboration between teams.
+
+=== Exploring the Demo Job Template
+
+*Step 1:* In the sidebar menu, under *Automation Execution*, click on the *Templates* submenu.
+
+*Step 2:* Explore the *Demo Job Template* that comes pre-loaded.
+
+*Step 3:* Review the configuration options and parameters available.
+
+[link=../assets/job_template_1.png]
+image::../assets/job_template_1.png[Controller Job Template,border=1]
+
+[NOTE]
+====
+Later on in this workshop, we will be creating our own Job Templates.
+====
+
+'''
 
 == Next Steps
 
-Press the `Next` button below to proceed to the next challenge.
+Congratulations! You've completed the introduction to Ansible Automation Platform and explored the key components of the unified web UI.
+
+*Step 1:* Press the *Next* button below to proceed to the next challenge once you've completed all the tasks above.
+
+'''
 
 == Troubleshooting
 
 [WARNING]
 ====
-NetBox may need a couple of minutes to start up. If you have problems accessing the NetBox tab, go to the AAP Terminal tab and run the following commands:
+*Common Issues and Solutions*
 
-.Stop the NetBox containers:
+*NetBox Startup Time*
+
+NetBox needs a couple of minutes to get started. If you experience issues accessing NetBox, please wait 2-3 minutes and try again.
+
+*NetBox Tab Access Problems*
+
+If you're having problems accessing the NetBox tab, follow these steps:
+
+*Step 1:* Go to the *AAP Terminal* tab.
+
+*Step 2:* Run the following command to stop NetBox:
+
 [source,bash]
 ----
 docker compose --project-directory=/tmp/netbox-docker stop
 ----
 
-.Restart the NetBox containers:
+*Step 3:* Run the following command to restart NetBox services:
+
 [source,bash]
 ----
 docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
 ----
+
+*Step 4:* Wait 2-3 minutes for the services to fully start, then try accessing NetBox again.
 ====
+
+'''
+
+[.text-center]
+_End of Lab Exercise 1
