@@ -74,8 +74,8 @@ The following services are available in your lab environment:
 
 Just like *Automation Controller* has resources needed for job template execution, *Event-Driven Ansible Controller* defines resources needed for execution of rulebooks. There are three main resource types that have to be defined before creating a rulebook activation that will listen for incoming events.
 
-[link=../assets/automation_decisions.png]
-image::../assets/automation_decisions.png[Automation Decisions Overview,border=1]
+[link=automation_decisions.png]
+image::automation_decisions.png[Automation Decisions Overview,border=1]
 
 '''
 
@@ -110,8 +110,8 @@ This was added at installation time and is distributed by Red Hat as `de-support
 *NetOps Decision Environment*:: 
 This was created for this workshop and is custom-built. This Decision Environment contains the collection `ansible.eda` which ships _supported plugins_ for several event sources.
 
-[link=../assets/eda_controller_de.png]
-image::../assets/eda_controller_de.png[EDA Controller Decision Environments,border=1]
+[link=eda_controller_de.png]
+image::eda_controller_de.png[EDA Controller Decision Environments,border=1]
 
 [NOTE]
 ====
@@ -142,8 +142,8 @@ This credential is added at installation time.
 *AAP*:: 
 This credential was pre-loaded into the AAP instance for this workshop. This credential will be used for *Rulebook Activations* in upcoming exercises.
 
-[link=../assets/eda_controller_credentials.png]
-image::../assets/eda_controller_credentials.png[EDA Controller Credentials,border=1]
+[link=eda_controller_credentials.png]
+image::eda_controller_credentials.png[EDA Controller Credentials,border=1]
 
 [TIP]
 ====
@@ -164,8 +164,8 @@ Projects are really just like they are in *Automation Controller* (under the *Au
 
 *Step 2:* Review the available projects that contain rulebooks.
 
-[link=../assets/eda_controller_project.png]
-image::../assets/eda_controller_project.png[EDA Controller Projects,border=1]
+[link=eda_controller_project.png]
+image::eda_controller_project.png[EDA Controller Projects,border=1]
 
 [NOTE]
 ====
