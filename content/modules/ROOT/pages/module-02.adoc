@@ -39,7 +39,7 @@ In this lab, you'll explore how Ansible Automation Platform syncs with NetBox an
 First, you will create a project in AAP that contains the NetBox dynamic inventory plugin configuration file. This project uses the `netbox.netbox.nb_inventory` plugin from the NetBox Labs Certified Collection to connect AAP to NetBox.
 
 **Navigate to the Projects page** in the `AAP` tab by going to **Automation Execution** → **Projects**. Then, **click** the **Create project** button. **Fill out the form** with the following details: 
-
++
 *Name:* `netbox-inventory-project`, *Organization:* `Default`
 *Execution environment:* `netbox-ee`, *Source control type:* `Git`
 *Source control URL:* `https://github.com/leogallego/netbox-inventory.git`. 
