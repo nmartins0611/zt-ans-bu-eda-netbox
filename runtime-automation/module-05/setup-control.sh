@@ -13,7 +13,7 @@ tee /tmp/setup_netbox-playbooks.yml << EOF
     - ansible.controller
 
   vars:
-    controller_host: localhost
+    controller_host: "https://localhost"
 #    SANDBOX_ID: "{{ lookup('env', '_SANDBOX_ID') | default('SANDBOX_ID_NOT_FOUND', true) }}"
     controller_username: admin
     controller_password: ansible123!
