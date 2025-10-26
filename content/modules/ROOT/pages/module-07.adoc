@@ -131,7 +131,7 @@ We will create this first, as it is required for the Event Rules.
 |`EDA Webhook`
 
 |URL
-|`http://control:5001/endpoint`
+|`http://control:5001/endpoint'
 
 |SSL
 |Disable the checkbox (unchecked)
