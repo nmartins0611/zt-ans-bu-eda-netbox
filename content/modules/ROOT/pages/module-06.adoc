@@ -81,15 +81,15 @@ We have already created a Job Workflow Template with the previous Job Templates 
 
 *Step 4:* Look for the *Provision New Device Workflow* in the list and click on it to explore it.
 
-[link=../assets/Feb-06-2025_at_17.54.01-image.png]
-image::../assets/Feb-06-2025_at_17.54.01-image.png[Provision New Device Workflow,border=1]
+[link=Feb-06-2025_at_17.54.01-image.png]
+image::Feb-06-2025_at_17.54.01-image.png[Provision New Device Workflow,border=1]
 
 === Open the Workflow Visualizer
 
 *Step 5:* Once in the *Details* tab of the Workflow, look for the blue *View workflow visualizer* button at the top right and click on it.
 
-[link=../assets/Feb-06-2025_at_17.57.36-image.png]
-image::../assets/Feb-06-2025_at_17.57.36-image.png[View Workflow Visualizer Button,border=1]
+[link=Feb-06-2025_at_17.57.36-image.png]
+image::Feb-06-2025_at_17.57.36-image.png[View Workflow Visualizer Button,border=1]
 
 [NOTE]
 ====
@@ -128,13 +128,13 @@ Now let's test the workflow by launching it manually.
 
 *Step 2:* Click the *3 dots* icon and select *Launch workflow* from the dropdown menu.
 
-[link=../assets/Feb-06-2025_at_18.01.33-image.png]
-image::../assets/Feb-06-2025_at_18.01.33-image.png[Launch Workflow,border=1]
+[link=Feb-06-2025_at_18.01.33-image.png]
+image::Feb-06-2025_at_18.01.33-image.png[Launch Workflow,border=1]
 
 *Step 3:* The workflow will run the two Job Templates on all existing devices in our `NetBox Dynamic Inventory`.
 
-[link=../assets/Feb-07-2025_at_01.57.45-image.png]
-image::../assets/Feb-07-2025_at_01.57.45-image.png[Workflow Execution,border=1]
+[link=Feb-07-2025_at_01.57.45-image.png]
+image::Feb-07-2025_at_01.57.45-image.png[Workflow Execution,border=1]
 
 *Step 4:* Monitor the workflow execution and verify that both Job Templates complete successfully.
 
