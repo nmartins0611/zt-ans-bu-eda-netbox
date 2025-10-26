@@ -10,7 +10,8 @@ echo "192.168.1.11 netbox.lab netbox" >> /etc/hosts
 echo "192.168.1.12 devtools.lab devtools" >> /etc/hosts
 
 ########
-
+systemctl stop firewalld
+systemctl disable firewalld
 
 RHEL_SSH_DIR="/home/rhel/.ssh"
 RHEL_PRIVATE_KEY="$RHEL_SSH_DIR/id_rsa"
