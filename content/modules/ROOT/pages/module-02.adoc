@@ -1,8 +1,4 @@
 = Exercise 2: AAP Dynamic Inventory
-:doctype: book
-:noexperimental:
-:notoc: left
-:notoclevels: 3
 :icons: font
 :source-highlighter: rouge
 
