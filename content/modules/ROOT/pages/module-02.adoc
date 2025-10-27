@@ -105,7 +105,7 @@ We are going to use a *Dynamic Inventory* plugin file from our partner *NetBox L
 |`Git`
 
 |Source Control URL
-|`https://github.com/ansible-tmm/netbox-inventory.git`
+|\`https://github.com/ansible-tmm/netbox-inventory.git`
 |===
 
 *Step 4:* Click the blue *Create project* button at the bottom.
