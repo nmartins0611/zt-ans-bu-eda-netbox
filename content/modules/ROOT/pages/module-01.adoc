@@ -6,6 +6,17 @@
 :source-highlighter: rouge
 
 '''
+[IMPORTANT]
+====
+Experiencing Bugs or Issues? 🐛
+
+If you encounter any problems or bugs during this lab, please help us improve!
+Log an issue on our GitHub repository:
+
+https://github.com/ansible/workshops/issues
+
+Thank you for your feedback!
+====
 
 == Lab Overview
 
