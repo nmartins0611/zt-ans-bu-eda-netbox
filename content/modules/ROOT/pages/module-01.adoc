@@ -1,7 +1,4 @@
 = Network Automation and Sources of Truth
-:doctype: book
-:notoc: left
-:notoclevels: 3
 :icons: font
 :source-highlighter: rouge
 
