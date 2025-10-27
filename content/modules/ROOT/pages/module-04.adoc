@@ -97,7 +97,7 @@ Currently, not all fields of an *EDA Project* can be edited after creation. If t
 |`Git`
 
 |Source Control URL
-|`https://github.com/leogallego/aap-netbox-rulebooks-cisco-live.git`
+|`https://github.com/ansible-tmm/aap-netbox-rulebooks-cisco-live.git`
 |===
 
 *Step 5:* Click the blue *Create project* button at the bottom.
