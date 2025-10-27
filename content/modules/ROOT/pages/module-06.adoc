@@ -1,8 +1,4 @@
 = Exercise 6: Event-Driven Ansible - New Device Added Workflow
-:doctype: book
-:noexperimental:
-:notoc: left
-:notoclevels: 3
 :icons: font
 :source-highlighter: rouge
 
