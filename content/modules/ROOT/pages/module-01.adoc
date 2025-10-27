@@ -10,7 +10,7 @@
 ====
 Experiencing Bugs or Issues? 🐛
 
-If you encounter any problems or bugs during this lab, please help us improve!
+If you encounter any content bugs during this lab, please help us improve!
 Log an issue on our GitHub repository:
 
 https://github.com/ansible/workshops/issues
