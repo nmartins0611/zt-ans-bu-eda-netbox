@@ -97,7 +97,7 @@ Currently, not all fields of an *EDA Project* can be edited after creation. If t
 |`Git`
 
 |Source Control URL
-|`https://github.com/ansible-tmm/aap-netbox-rulebooks-cisco-live.git`
+|\`https://github.com/ansible-tmm/aap-netbox-rulebooks-cisco-live.git`
 |===
 
 *Step 5:* Click the blue *Create project* button at the bottom.
@@ -345,24 +345,6 @@ docker compose --project-directory=/tmp/netbox-docker up -d netbox netbox-worker
 ----
 
 *Step 4:* Wait 2-3 minutes for the services to fully start, then try accessing NetBox again.
-====
-
-[WARNING]
-====
-*Missing NetBox Pre-loaded Content*
-
-For the Dynamic Inventory to work, we need some NetBox pre-loaded content.
-
-*If you can't see devices in the NetBox tab:*
-
-*Step 1:* Run the following command:
-
-[source,bash]
-----
-su - rhel -c 'cd /home/rhel/netbox-setup; ansible-navigator run /home/rhel/netbox-setup/netbox-setup.yml --mode stdout --penv _SANDBOX_ID'
-----
-
-*Step 2:* Wait for the setup playbook to complete, then refresh the NetBox web interface.
 ====
 
 '''
